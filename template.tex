@@ -1,0 +1,48 @@
+\documentclass[10pt]{beamer}
+\usetheme{Marburg}
+\definecolor{this.blue}{RGB}{52,101,164}
+\definecolor{this.red}{RGB}{204,0,0}
+\definecolor{this.green}{RGB}{102,153,0}
+\definecolor{this.orange}{RGB}{242,148,51}
+\usecolortheme[RGB={0,0,0}]{structure}
+\usepackage[brazil]{babel}
+\setbeamertemplate{sidebar canvas right}[horizontal shading][left=this.orange,right=this.orange]
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifxetex
+  \usepackage{fontspec,xltxtra,xunicode}
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+\else
+  \ifluatex
+    \usepackage{fontspec}
+    \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \else
+    \usepackage[utf8]{inputenc}
+  \fi
+\fi
+% Comment these out if you don't want a slide with just the
+% part/section/subsection/subsubsection title:
+\AtBeginPart{\frame{\partpage}}
+\AtBeginSection{\frame{\sectionpage}}
+\AtBeginSubsection{\frame{\subsectionpage}}
+\AtBeginSubsubsection{\frame{\subsubsectionpage}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{0}
+
+\title{Your presentation name here}
+\author{Your name here}
+
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}\frametitle{Sumário}
+\tableofcontents
+\end{frame}
+
+\include{content}
+
+\end{document}
