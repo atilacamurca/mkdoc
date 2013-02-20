@@ -3,7 +3,7 @@
 #
 #       mkdoc.py
 #       
-#       Copyright 2012 Átila Camurça <camurca.home@gmail.com>
+#       Copyright 2013 Átila Camurça <camurca.home@gmail.com>
 #       
 #       This program is free software; you can redistribute it and/or modify
 #       it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ def dir_is_empty():
     return os.listdir(curdir) == []
 
 def init():
-    print "initializing project ..."
+    sys.stdout.write("initializing project... ")
     if dir_is_empty():
         shutil.copy(appdir + "/template.tex", curdir + "/main.tex")
         # Future release: test for author
@@ -47,8 +47,13 @@ def init():
         # print author, title
         filename = curdir + "/content.md"
         file = open(filename, 'w')
-        file.write("# Introduction")
+        file.write("""% Describe your presentation here
+# Introduction
+
+### Introduction
+""")
         file.close()
+        print "done."
     else:
         print "[ERROR] directory is not empty."
 
@@ -60,16 +65,16 @@ def edit():
         if not opt in ('-t', '--template'): print '[ERROR] option %s not found.' % opt; return
     else:
         filename = 'content.md'
-    editor = raw_input('open with [gedit]: ')
+    editor = raw_input('open with [blank for default]: ')
     if not editor:
-        editor = 'gedit'
+        editor = 'xdg-open'
     os.system("%s %s &" % (editor, filename))
 
 def view():
     print "compiling project ..."
     os.system("pandoc -t beamer content.md -o content.tex")
     os.system("pdflatex -interaction=nonstopmode main.tex")
-    os.system("evince main.pdf &")
+    os.system("xdg-open main.pdf")
 
 def help():
     print """
@@ -89,10 +94,25 @@ COMMANDS
     view - generate file and open pdf
 
     help - show this help
+
+    docs - show the documentation of mkdoc in the default browser
+
+    cleanup - remove log and aux files
 """
 
+def docs():
+    url = "file://%s/docs/index.html" % appdir
+    os.system("xdg-open %s" % url)
+
+def cleanup():
+    os.system("cd %s && ls *.aux *.log *.nav *.out *.snm *.toc" % curdir)
+    answer = raw_input("Confirm remove? _yes/[no]: ")
+    if answer in ('y', 'yes'):
+        os.system("cd %s && rm *.aux *.log *.nav *.out *.snm *.toc" % curdir)
+
 if __name__ == '__main__':
-    opts = {'init': init, 'edit': edit, 'view': view, 'help': help}
+    opts = {'init': init, 'edit': edit, 'view': view, 'help': help,
+            'docs': docs, 'cleanup': cleanup}
     if len(sys.argv) > 1:
         command = sys.argv[1]
     else:

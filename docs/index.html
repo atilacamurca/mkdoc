@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>mkdoc - docs</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="">
+      <meta name="author" content="">
+
+      <!-- Le styles -->
+      <link href="css/bootstrap.css" rel="stylesheet">
+      <style type="text/css">
+         body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+         }
+         .sidebar-nav {
+            padding: 9px 0;
+         }
+
+         @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+               float: none;
+               padding-left: 5px;
+               padding-right: 5px;
+            }
+         }
+      </style>
+      <link href="css/bootstrap-responsive.css" rel="stylesheet">
+      <link href="css/mkdoc.css" rel="stylesheet">
+
+      <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+      <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <![endif]-->
+
+      <!-- Fav and touch icons -->
+      <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+      <link rel="shortcut icon" href="../assets/ico/favicon.png">
+   </head>
+
+   <body>
+
+      <div class="navbar navbar-inverse navbar-fixed-top">
+         <div class="navbar-inner">
+            <div class="container-fluid">
+               <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+               </button>
+               <a class="brand" href="#">mkdoc - docs</a>
+               <div class="nav-collapse collapse">
+                  <ul class="nav">
+                     <li class="active"><a href="#">Home</a></li>
+                     <li><a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown</a></li>
+                     <li><a href="http://johnmacfarlane.net/pandoc/" target="_blank">Pandoc</a></li>
+                     <li><a href="https://github.com/atilacamurca/mkdoc" target="_blank">Source code on GitHub</a></li>
+                  </ul>
+               </div><!--/.nav-collapse -->
+            </div>
+         </div>
+      </div>
+
+      <div class="container-fluid">
+         <div class="row-fluid">
+            <div class="span3">
+               <div class="well sidebar-nav" style="position: fixed; padding-right: 100px;">
+                  <ul class="nav nav-list">
+                     <li class="nav-header">mkdoc</li>
+                     <li><a href="#init">Novo projeto</a></li>
+                     <li><a href="#edit">Editar documento</a></li>
+                     <li><a href="#edit-t">Editar template</a></li>
+                     <li><a href="#view">Visualizar documento</a></li>
+                     <li class="nav-header">Cabeçalhos</li>
+                     <li><a href="#secao">Seção</a></li>
+                     <li><a href="#sub-secao">Sub-seção</a></li>
+                     <li><a href="#titulo">Título</a></li>
+                     <li class="nav-header">Elementos</li>
+                     <li><a href="#enfase">Ênfase</a></li>
+                     <li><a href="#lista">Lista</a></li>
+                     <li><a href="#numerada">Lista numerada</a></li>
+                     <li><a href="#encadeada">Lista encadeada</a></li>
+                     <li><a href="#citacao">Citação</a></li>
+                     <li><a href="#codigo">Código-fonte</a></li>
+                     <li><a href="#bloco">Bloco</a></li>
+                     <li><a href="#links">Links</a></li>
+                     <li><a href="#novo-slide">Novo Slide</a></li>
+                     <li><a href="#escape">Escape Markdown</a></li>
+                     <li class="nav-header">LaTeX</li>
+                     <li><a href="#slidetitle">Slide title</a></li>
+                     <li><a href="#latex-imagem">Imagem</a></li>
+                     <li><a href="#sub-titulo">Sub-Título</a></li>
+                  </ul>
+               </div><!--/.well -->
+            </div><!--/span-->
+            <div class="span9">
+               <div class="row-fluid" id="init">
+
+                  <div class="span6">
+                     <h3>Novo projeto</h3>
+                     <p>Para iniciar um novo projeto abra um terminal e faça.</p>
+                     <pre>$ mkdir nome-projeto
+$ cd nome-projeto
+$ mkdoc init</pre>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <pre>initializing project...
+done.</pre>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="edit">
+
+                  <div class="span6">
+                     <h3>Editar documento</h3>
+                     <p>Para editar seu documento abra um terminal, entre no
+                        diretório do seu projeto e faça.</p>
+                     <pre>$ mkdir edit</pre>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <pre>editing project ...
+open with [gedit]:</pre>
+                     <kbd>Enter</kbd> para abrir com gedit, ou digite seu editor de texto.
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="edit-t">
+
+                  <div class="span6">
+                     <h3>Editar template</h3>
+                     <p>Para editar seu documento abra um terminal, entre no
+                        diretório do seu projeto e faça.</p>
+                     <pre>$ mkdir edit -t</pre>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <pre>editing project ...
+open with [gedit]:</pre>
+                     <kbd>Enter</kbd> para abrir com gedit, ou digite seu editor de texto.
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="view">
+
+                  <div class="span6">
+                     <h3>Visualizar documento</h3>
+                     <p>Para visualizar seu documento abra um terminal, entre no
+                        diretório do seu projeto e faça.</p>
+                     <pre>$ mkdir view</pre>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <p>Seu documento será compilado e seu documento pdf será aberto no evince.</p>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <h2>Markdown</h2>
+               <hr/>
+               
+               <div class="row-fluid" id="secao">
+
+                  <div class="span6">
+                     <h3>Seção</h3>
+                     <p>Para iniciar uma seção.</p>
+                     <pre># Nome da seção
+<kbd>Enter</kbd></pre>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <p>Cria um item no sumário</p>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="sub-secao">
+
+                  <div class="span6">
+                     <h3>Sub-seção</h3>
+                     <p>Para iniciar uma sub-seção.</p>
+                     <pre>## Nome da sub-seção
+<kbd>Enter</kbd></pre>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <p>Cria um sub-item no sumário</p>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+
+               <hr/>
+               
+               <div class="row-fluid" id="titulo">
+
+                  <div class="span6">
+                     <h3>Título</h3>
+                     <p>Para iniciar um slide com título.</p>
+                     <pre>### Título
+<kbd>Enter</kbd></pre>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <img src="img/titulo.png" class="img-polaroid"/>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="enfase">
+
+                  <div class="span6">
+                     <h3>Ênfase</h3>
+                     <p>Para enfatizar com negrito ou itálico.</p>
+                     <pre>*itálico* ou _itálico_
+**negrito** ou __negrito__</pre>
+                     <p>também é possível</p>
+                     <pre>***itálico e negrito***
+___itálico e negrito___</pre>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <img src="img/enfase.png" class="img-polaroid"/>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+
+               <hr/>
+               
+               <div class="row-fluid" id="lista">
+
+                  <div class="span6">
+                     <h3>Lista</h3>
+                     <p>Para criar uma lista.</p>
+                     <pre>* item 1
+* item 2
+* item 3</pre>
+                     <p>ou</p>
+                     
+                     <pre>+ item 1
++ item 2
++ item 3</pre>
+                     <p>ou ainda</p>
+                     
+                     <pre>- item 1
+- item 2
+- item 3</pre>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <img src="img/lista.png" class="img-polaroid"/>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="numerada">
+
+                  <div class="span6">
+                     <h3>Lista numerada</h3>
+                     <p>Para criar uma lista numerada.</p>
+                     <pre>1. item 1
+2. item 2
+3. item 3</pre>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <img src="img/numerada.png" class="img-polaroid"/>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="encadeada">
+
+                  <div class="span6">
+                     <h3>Lista encadeada</h3>
+                     <p>Para criar uma lista encadeada.</p>
+                     <pre>* item 1
+   <kbd>Tab</kbd> + sub-item 1.1
+   <kbd>Tab</kbd> + sub-item 1.2
+* item 2
+   <kbd>Tab</kbd> + sub-item 2.1</pre>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <img src="img/encadeada.png" class="img-polaroid"/>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="citacao">
+
+                  <div class="span6">
+                     <h3>Citação</h3>
+                     <p>Para criar uma citação.</p>
+                     <pre>&gt; Falar é fácil, me mostre o código.
+                     
+Linus Torvalds</pre>
+                     <p>Pode ser usado em mais de uma linha.</p>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <img src="img/citacao.png" class="img-polaroid"/>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="codigo">
+
+                  <div class="span6">
+                     <h3>Código-fonte</h3>
+                     <p>Para criar uma texto demonstrando um código-fonte.</p>
+                     <pre> <kbd>Tab</kbd> printf("hello world.");</pre>
+                     <p>ou</p>
+                     <pre>~~~
+printf("hello world.");
+~~~</pre>
+                     <p>ou em caso de código inline</p>
+                     <pre>um simples `printf("hello world.");` em C.</pre>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <img src="img/codigo.png" class="img-polaroid"/>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="bloco">
+
+                  <div class="span6">
+                     <h3>Bloco</h3>
+                     <p>Para criar um bloco.</p>
+                     <pre>#### Bloco
+<kbd>Tab</kbd> int main() {
+<kbd>Tab</kbd> }
+<kbd>Enter</kbd></pre>
+                     <p><strong>dica:</strong> use com <kbd>Tab</kbd> para mostrar código-fonte.</p>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <img src="img/bloco.png" class="img-polaroid"/>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="links">
+
+                  <div class="span6">
+                     <h3>Links</h3>
+                     <p>Para criar um link.</p>
+                     <pre>Clique [aqui](http://ubuntu.com/download) para baixar o Ubuntu.</pre>
+                     <p>ou</p>
+                     <pre>Clique [aqui][ubuntu] para baixar o Ubuntu.
+<kbd>Enter</kbd>
+[ubuntu]: http://ubuntu.com/download</pre>
+                     <p>
+                        dessa forma um <b>id</b> chamado <code>ubuntu</code>
+                        é referenciado logo em baixo, podendo ser usado em outras
+                        referências.
+                     </p>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <img src="img/links.png" class="img-polaroid"/>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="novo-slide">
+
+                  <div class="span6">
+                     <h3>Novo slide</h3>
+                     <p>Para criar um novo slide.</p>
+                     <pre><kbd>Enter</kbd>
+---
+<kbd>Enter</kbd></pre>
+                     <p>
+                        <strong>obs.:</strong> Antes de Seções e Sub-seções
+                        não é necessário a utilização. Você irá notar que isto cria
+                        um slide em branco.
+                     </p>
+                  </div><!--/span-->
+                  <div class="span6">                     
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="escape">
+
+                  <div class="span6">
+                     <h3>Escape Markdown</h3>
+                     <p>Para gerar caracteres literais e diferenciá-los da linguagem
+                        markdown use <code>\</code> (backslash).</p>
+                     <pre>\* asteriscos literais \*</pre>
+                     <p>o mesmo vale para:</p>
+                     <ul>
+                        <li>\   backslash</li>
+                        <li>`   backtick</li>
+                        <li>*   asterisk</li>
+                        <li>_   underscore</li>
+                        <li>{}  curly braces</li>
+                        <li>[]  square brackets</li>
+                        <li>()  parentheses</li>
+                        <li>#   hash mark</li>
+                        <li>+   plus sign</li>
+                        <li>-   minus sign (hyphen)</li>
+                        <li>.   dot</li>
+                        <li>!   exclamation mark</li>
+                     </ul>
+                  </div><!--/span-->
+                  <div class="span6">
+                     &nbsp;
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="slidetitle">
+
+                  <div class="span6">
+                     <h3>Slide título</h3>
+                     <p>Para criar um slide de título.</p>
+                     <pre>\slidetitle{Introdução}</pre>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <img src="img/slidetitle.png" class="img-polaroid"/>
+                     <p><strong>obs.:</strong> cor depende da paleta de cores.</p>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="latex-imagem">
+
+                  <div class="span6">
+                     <h3>Imagem</h3>
+                     <p>Para inserir uma imagem definindo as proporções.</p>
+                     <pre>\begin{figure}
+   \includegraphics[scale=1.0]{img/ubuntu.png}
+   \caption{Ubuntu}
+\end{figure}</pre>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <img src="img/latex-imagem.png" class="img-polaroid"/>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="sub-titulo">
+
+                  <div class="span6">
+                     <h3>Sub-título</h3>
+                     <p>Para iniciar um slide com sub-título.</p>
+                     <pre>\framesubtitle{Linux}
+<kbd>Enter</kbd></pre>
+                     <p><strong>obs.:</strong> usar antes de <code>###</code>.</p>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <img src="img/sub-titulo.png" class="img-polaroid"/>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+
+            </div><!--/span9-->
+         </div><!--/row-->
+
+         <hr>
+
+         <footer>
+            <p>&copy; mkdoc 2013</p>
+         </footer>
+
+      </div><!--/.fluid-container-->
+
+      <!-- Le javascript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="js/jquery.js"></script>
+      <script src="js/bootstrap.js"></script>
+
+   </body>
+</html>

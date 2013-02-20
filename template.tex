@@ -5,7 +5,8 @@
 \definecolor{this.green}{RGB}{102,153,0}
 \definecolor{this.orange}{RGB}{242,148,51}
 \usecolortheme[RGB={0,0,0}]{structure}
-\usepackage[brazil]{babel}
+% Uncomment to enable babel to your language
+% \usepackage[brazil]{babel}
 \setbeamertemplate{sidebar canvas right}[horizontal shading][left=this.orange,right=this.orange]
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
@@ -20,12 +21,19 @@
     \usepackage[utf8]{inputenc}
   \fi
 \fi
-% Comment these out if you don't want a slide with just the
+% Uncomment these out if you don't want a slide with just the
 % part/section/subsection/subsubsection title:
-\AtBeginPart{\frame{\partpage}}
-\AtBeginSection{\frame{\sectionpage}}
-\AtBeginSubsection{\frame{\subsectionpage}}
-\AtBeginSubsubsection{\frame{\subsubsectionpage}}
+%\AtBeginPart{\frame{\partpage}}
+%\AtBeginSection{\frame{\sectionpage}}
+%\AtBeginSubsection{\frame{\subsectionpage}}
+%\AtBeginSubsubsection{\frame{\subsubsectionpage}}
+
+\newcommand{\slidetitle}[1]{
+	{\begin{center}\Huge{\textbf{\textcolor[RGB]{52,101,164}{#1}}}\end{center}}
+}
+\newcommand{\slidesubtitle}[1]{
+	{\begin{center}\huge{\textbf{\textcolor[RGB]{51,51,51}{#1}}}\end{center}}
+}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
@@ -39,7 +47,7 @@
 \titlepage
 \end{frame}
 
-\begin{frame}\frametitle{Sumário}
+\begin{frame}\frametitle{Sumary}
 \tableofcontents
 \end{frame}
 

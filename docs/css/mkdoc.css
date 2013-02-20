@@ -1,0 +1,31 @@
+kbd {
+   background: none repeat scroll 0 0 #EEEEEE;
+   border-color: #CCCCCC #AAAAAA #888888 #BBBBBB;
+   border-style: solid;
+   border-width: 1px 2px 2px 1px;
+   color: #000000;
+   padding: 2px 4px 0;
+   white-space: nowrap;
+   -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+        border-radius: 4px;
+}
+
+pre kbd {
+   font-size: 14px;
+}
+
+code {
+   font-size: 15px;
+}
+
+.row-fluid {
+   padding-top:50px;
+   margin-top:-50px;
+   -webkit-background-clip:content-box;
+   background-clip:content-box;
+}
+
+img.img-polaroid {
+   width: 350px;
+}
