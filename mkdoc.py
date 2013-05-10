@@ -23,9 +23,11 @@
 import sys
 import os
 import shutil
+import json
 
 appdir, filename = os.path.split(os.path.abspath(__file__))
 curdir = os.getcwd()
+CONFIG_FILE = ".config.json"
 
 def dir_is_empty():
     return os.listdir(curdir) == []
@@ -33,25 +35,21 @@ def dir_is_empty():
 def init():
     sys.stdout.write("initializing project... ")
     if dir_is_empty():
-        shutil.copy(appdir + "/template.tex", curdir + "/main.tex")
-        # Future release: test for author
         if len(sys.argv) > 2:
-            author = sys.argv[2]
+            type = sys.argv[2]
         else:
-            author = ""
-        # Future release: test for title
-        if len(sys.argv) > 3:
-            title = sys.argv[3]
-        else:
-            title = ""
-        # print author, title
+            type = "beamer"
+        shutil.copy(appdir + "/" + type + ".tex", curdir + "/main.tex")
         filename = curdir + "/content.md"
         file = open(filename, 'w')
-        file.write("""% Describe your presentation here
-# Introduction
-
-### Introduction
-""")
+        file.write("""<!-- your text here -->""")
+        file.close()
+        # config file
+        config = {"type": type}
+        data_string = json.dumps(config)
+        filename = "%s/%s" % (curdir, CONFIG_FILE)
+        file = open(filename, 'w')
+        file.write(data_string)
         file.close()
         print "done."
     else:
@@ -71,10 +69,13 @@ def edit():
     os.system("%s %s &" % (editor, filename))
 
 def view():
+    json_data = open(CONFIG_FILE)
+    data = json.load(json_data)
     print "compiling project ..."
-    os.system("pandoc -t beamer content.md -o content.tex")
+    os.system("pandoc -t %s content.md -o content.tex" % data["type"])
     os.system("pdflatex -interaction=nonstopmode main.tex")
     os.system("xdg-open main.pdf")
+    json_data.close()
 
 def help():
     print """
@@ -85,10 +86,11 @@ USAGE
 
 COMMANDS
     init - start a project in an empty directory
+        options: beamer|latex
+        default: beamer
 
     edit - open file to edit
-
-     OPTIONS
+        options:
         -t, --template - open template file to edit instead
 
     view - generate file and open pdf
