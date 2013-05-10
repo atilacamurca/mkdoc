@@ -21,21 +21,22 @@ Then download, extract the project, rename to `mkdoc` and:
 Options
 -------
 
-	USAGE
-		mkdoc command [options]
-		
-	COMMANDS
-		init - start a project in an empty directory
+    USAGE
+        mkdoc command [options]
 
-		edit - open file to edit
+    COMMANDS
+        init - start a project in an empty directory
+            options: beamer|latex
+            default: beamer
 
-		OPTIONS
-			-t, --template - open template file to edit instead
+        edit - open file to edit
+            options:
+            -t, --template - open template file to edit instead
 
-		view - generate file and open pdf
+        view - generate file and open pdf
 
-		help - show this help
+        help - show this help
 
-		docs - open the documentation of mkdoc in the default browser
+        docs - show the documentation of mkdoc in the default browser
 
-		cleanup - remove log and aux files
+        cleanup - remove log and aux files
