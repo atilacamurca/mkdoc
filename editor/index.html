@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>mkdoc editor</title>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <script src="lib/jquery.js"></script>
+      <script src="lib/bootstrap.min.js"></script>
+      <script src="lib/bootstrap-tooltip.js"></script>
+      <script src="lib/codemirror.js"></script>
+      <link rel="stylesheet" href="css/codemirror.css">
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+      <link href="css/font-awesome.min.css" media="screen" rel="stylesheet" type="text/css" />
+      <link rel="stylesheet" href="theme/lesser-dark.css">
+      <script src="mode/markdown/markdown.js"></script>
+      <script src="addon/selection/active-line.js"></script>
+      <script src="lib/mousetrap.min.js"></script>
+       <script src="lib/mousetrap-global-bind.min.js"></script>
+      <script src="js/main.js"></script>
+
+       <style type="text/css">
+           .CodeMirror {
+               border: 1px solid black;
+               font-size: 14px;
+               height: 500px;
+           }
+
+           .editor-name {
+               font-size: 20px;
+               margin-right: 16px;
+               font-weight: bold;
+           }
+       </style>
+      <style id="cursor-highlight" type="text/css">
+			.CodeMirror-activeline-background {background: #555753 !important;}
+	  </style>
+   </head>
+   <body>
+		<div class="container">
+			<div class="row" style="margin-top: 20px;">
+				<div class="span12">
+					<span class="editor-name">
+                        <i class="icon-file"></i> mkdoc-editor
+                    </span>
+					
+					<div class="btn-group">
+                      <button id="save" href="#" onclick="return false;"
+                              class="btn" rel="tooltip" title="Save [Ctrl + S]">
+                         <i class="icon-save"></i> Save
+                      </button>
+                      <button id="view" href="#" onclick="return false;"
+                              class="btn" rel="tooltip" title="View [Ctrl + Shift + V]">
+                         <i class="icon-eye-open"></i> View
+                      </button>
+					</div>
+
+                    <div class="btn-group">
+                        <a data-depth="#" href="#" class="btn bt-header" onclick="return false;">
+                            <b>1#</b>
+                        </a>
+                        <a data-depth="##" href="#" class="btn bt-header" onclick="return false;">
+                            <b>2#</b>
+                        </a>
+                        <a data-depth="###" href="#" class="btn bt-header" onclick="return false;">
+                            <b>3#</b>
+                        </a>
+                    </div>
+
+                    <div class="btn-group">
+                        <a id="bt-bold" href="#" class="btn" onclick="return false;"
+                               rel="tooltip" title="Bold">
+                            <i class="icon-bold"></i>
+                        </a>
+                        <a id="bt-italic" href="#" class="btn" onclick="return false;"
+                           rel="tooltip" title="Italic">
+                            <i class="icon-italic"></i>
+                        </a>
+                    </div>
+
+                    <div class="btn-group">
+                        <a href="#" class="btn" onclick="return false;"
+                           rel="tooltip" title="Insert picture">
+                            <i class="icon-picture"></i>
+                        </a>
+                        <a id="bt-code" href="#" class="btn" onclick="return false;"
+                           rel="tooltip" title="Insert code block">
+                            <i class="icon-code"></i>
+                        </a>
+                        <a id="bt-link" href="#" class="btn" onclick="return false;"
+                           rel="tooltip" title="Insert link">
+                            <i class="icon-link"></i>
+                        </a>
+                    </div>
+
+                    <div class="btn-group">
+                        <a id="undo" href="#" class="btn" onclick="return false;">
+                            <i class="icon-reply"></i> Undo
+                        </a>
+                        <a id="redo" href="#" class="btn" onclick="return false;">
+                            <i class="icon-share-alt"></i> Redo
+                        </a>
+                    </div>
+                    <hr/>
+				</div><!-- .span -->
+			</div><!-- .row -->
+
+			<div class="row" style="margin-top: 10px;">
+                <div class="span3">
+                    <div class="well" style="max-width: 340px; padding: 8px 0;">
+                        <ul class="nav nav-list">
+                            <li class="nav-header">Files (In development)</li>
+                            <li><a href="#">main.md</a></li>
+                            <li><a href="#">main.tex</a></li>
+                        </ul>
+                    </div>
+                </div>
+				<div class="span9">
+					<form class="form">
+						<textarea id="editor"></textarea>
+					</form>
+				</div>
+			</div><!-- .row -->
+
+            <div class="row">
+                <div class="span2 offset3">
+                    <div>Theme:</div>
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-large theme"
+                           data-theme="default" data-color="#e8f2ff"
+                           onclick="return false;">
+                            <i class="icon-lightbulb"></i>
+                        </a>
+                        <a href="#" class="btn btn-inverse btn-large theme"
+                           data-theme="lesser-dark" data-color="#555753"
+                           onclick="return false;">
+                            <i class="icon-lightbulb icon-"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+		</div><!-- .container -->
+      
+   </body>
+</html>

@@ -29,8 +29,10 @@ appdir, filename = os.path.split(os.path.abspath(__file__))
 curdir = os.getcwd()
 CONFIG_FILE = ".config.json"
 
+
 def dir_is_empty():
     return os.listdir(curdir) == []
+
 
 def init():
     sys.stdout.write("initializing project... ")
@@ -55,6 +57,7 @@ def init():
     else:
         print "[ERROR] directory is not empty."
 
+
 def edit():
     print 'editing project ...'
     if len(sys.argv) > 2:
@@ -68,14 +71,23 @@ def edit():
         editor = 'xdg-open'
     os.system("%s %s &" % (editor, filename))
 
+
 def view():
     json_data = open(CONFIG_FILE)
     data = json.load(json_data)
     print "compiling project ..."
     os.system("pandoc -t %s content.md -o content.tex" % data["type"])
-    os.system("pdflatex -interaction=nonstopmode main.tex")
+    os.system("pdflatex -shell-escape -interaction=nonstopmode main.tex")
     os.system("xdg-open main.pdf")
     json_data.close()
+
+
+def editor():
+    print "opening mkdoc-editor ... "
+    editor_path = "%s/editor/" % appdir
+    os.system("xdg-open http://localhost:9669")
+    os.system("cd %s && nodemon server.js %s" % (editor_path, curdir))
+
 
 def help():
     print """
@@ -88,6 +100,8 @@ COMMANDS
     init - start a project in an empty directory
         options: beamer|latex
         default: beamer
+
+    editor - open a web editor
 
     edit - open file to edit
         options:
@@ -102,9 +116,11 @@ COMMANDS
     cleanup - remove log and aux files
 """
 
+
 def docs():
     url = "file://%s/docs/index.html" % appdir
     os.system("xdg-open %s" % url)
+
 
 def cleanup():
     os.system("cd %s && ls *.aux *.log *.nav *.out *.snm *.toc" % curdir)
@@ -114,7 +130,7 @@ def cleanup():
 
 if __name__ == '__main__':
     opts = {'init': init, 'edit': edit, 'view': view, 'help': help,
-            'docs': docs, 'cleanup': cleanup}
+            'docs': docs, 'cleanup': cleanup, 'editor': editor}
     if len(sys.argv) > 1:
         command = sys.argv[1]
     else:
