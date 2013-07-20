@@ -1,7 +1,7 @@
 mkdoc
 =====
 
-a simple app to use with pandoc to generate pfd presentations.
+a simple app to use with pandoc to generate pdf presentations.
 
 Instalation
 -----------
@@ -18,6 +18,20 @@ Then download, extract the project, rename to `mkdoc` and:
 	# mv mkdoc /usr/local
 	# ln -s /usr/local/mkdoc/mkdoc /usr/local/bin
 
+mkdoc editor
+------------
+
+A web editor develop under node.js as server and html5 as client.
+
+Installation:
+
+    $ sudo su
+    # apt-get install nodejs
+
+ For development:
+
+    # npm install -g nodemon
+
 Options
 -------
 
@@ -28,6 +42,8 @@ Options
         init - start a project in an empty directory
             options: beamer|latex
             default: beamer
+
+        editor - open a web editor (needs nodejs)
 
         edit - open file to edit
             options:
