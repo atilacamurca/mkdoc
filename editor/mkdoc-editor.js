@@ -47,3 +47,25 @@ exports.load = function(curdir, file) {
 		content: content
 	});
 };
+
+exports.listPictures = function(curdir) {
+	var imgdir = curdir + '/img';
+	var exists_imgdir = fs.existsSync(imgdir);
+	if (exists_imgdir) {
+		var imgdir = fs.readdirSync(imgdir);
+		var list = [];
+		for (var i = 0; i < imgdir.length; i++) {
+			if (/(\.png|\.jpg|\.jpeg)$/.test(imgdir[i])) {
+				list.push("<li><a href='#' class='picture'>" + imgdir[i] + "</a></li>");
+			}
+		}
+		return JSON.stringify({
+			items: list
+		});
+	} else {
+		fs.mkdirSync(imgdir, '0666');
+		return JSON.stringify({
+			error: 'No images found at ' + imgdir
+		});
+	}
+}

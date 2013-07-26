@@ -26,6 +26,10 @@ http.createServer(function(req, res) {
 		res.writeHead(200, {"Content-Type": "text/json"});
 		var result = editor.load(cwd, 'content.md');
 		res.end(result);
+	} else if (pathname === '/list_pictures') {
+		res.writeHead(200, {"Content-Type": "text/json"});
+		var result = editor.listPictures(cwd);
+		res.end(result);
    } else {
       // http://ericsowell.com/blog/2011/5/6/serving-static-files-from-node-js
       var filePath = '.' + pathname;

@@ -1,13 +1,12 @@
-
-$(function() {
-   var doc = CodeMirror.fromTextArea(document.getElementById("editor"), {
-      mode: "markdown",
-      styleActiveLine: true,
-      lineNumbers: true,
-      lineWrapping: true,
-      theme: 'lesser-dark',
+$(function () {
+	var doc = CodeMirror.fromTextArea(document.getElementById("editor"), {
+		mode: "markdown",
+		styleActiveLine: true,
+		lineNumbers: true,
+		lineWrapping: true,
+		theme: 'lesser-dark',
 		autofocus: true
-   });
+	});
 
 	// load content to the editor
 	load();
@@ -16,13 +15,18 @@ $(function() {
 	});
 
 	// TODO: load preferences
-	/*if (supports_html5_storage()) {
+	if (supports_html5_storage()) {
 		var theme = localStorage.getItem("mkdoc.editor.theme");
-		doc.setOption("theme", theme);
+		if (theme !== null) {
+			doc.setOption("theme", theme);
+		}
+
 		var color = localStorage.getItem("mkdoc.editor.color");
-		$("#cursor-highlight").html(".CodeMirror-activeline-background {background: "
-			+ color + " !important;}");
-	}*/
+		if (color !== null) {
+			$("#cursor-highlight").html(".CodeMirror-activeline-background {background: "
+				+ color + " !important;}");
+		}
+	}
 
 	$("#view").click(function () {
 		view();
@@ -43,55 +47,31 @@ $(function() {
 	});
 
 	$("#bt-code").click(function () {
-		// TODO: verificar se o texto selecionado possui multiplas linhas e colocar "~~~"
-		if (doc.somethingSelected()) {
-			var selected = doc.getSelection();
-			console.log(selected.indexOf("\n"));
-			if (selected.indexOf("\n") !== -1) {
-				doc.replaceSelection("~~~\n" + selected + "\n~~~");
-			} else {
-				doc.replaceSelection("`" + selected + "`");
-			}
-			doc.focus();
-		} else {
-			var cursor = doc.getCursor('start');
-			var line_content = doc.getLine(cursor.line);
-			doc.setLine(cursor.line, line_content + "~~~\n\n~~~");
-			doc.setCursor(cursor.line + 1, 0);
-			doc.focus();
-		}
+		code();
 	});
 
 	$("#bt-link").click(function () {
-		if (doc.somethingSelected()) {
-			var selected = doc.getSelection();
-			doc.replaceSelection("[" + selected + "]()");
-			var cursor = doc.getCursor('end');
-			doc.setCursor(cursor.line, cursor.ch - 1);
-			doc.focus();
-		} else {
-			var cursor = doc.getCursor('start');
-			var line_content = doc.getLine(cursor.line);
-			doc.setLine(cursor.line, line_content + "[]()");
-			doc.setCursor(cursor.line, cursor.ch + 3);
-			doc.focus();
-		}
+		link();
+	});
+
+	$("#bt-picture").click(function () {
+		picture();
+	});
+
+	$(document).delegate("a.picture", 'click', function () {
+		var picture = $(this).html();
+		var latex_figure = "\\begin{figure}\n\t\\includegraphics[scale=1.0]{img/"
+			+ picture + "}\n\t\\caption{}\n\\end{figure}";
+		var cursor = doc.getCursor('end');
+		doc.setLine(cursor.line, latex_figure);
+		doc.setCursor(cursor.line + 2, cursor.ch + 10);
+		$('#modal-picture').modal('hide');
+		doc.focus();
 	});
 
 	$(".bt-header").click(function () {
 		var depth = $(this).attr("data-depth") + " ";
-		if (doc.somethingSelected()) {
-			var selected = doc.getSelection();
-			doc.replaceSelection(depth + selected);
-			var cursor = doc.getCursor('end');
-			doc.setCursor(cursor.line, cursor.ch);
-			doc.focus();
-		} else {
-			var cursor = doc.getCursor('end');
-			doc.setLine(cursor.line, depth);
-			doc.setCursor(cursor.line, cursor.ch);
-			doc.focus();
-		}
+		header(depth);
 	});
 
 	$("#bt-bold").click(function () {
@@ -115,17 +95,17 @@ $(function() {
 		var save_text = save.html();
 		save.attr("disabled", "disabled");
 		save.html(loadindText());
-		$.post('/save', {content: content}, function (json) {
+		$.post('/save', {content: content},function (json) {
 			if (json.error) {
 				console.log(json.error);
 			}
 		}).complete(function () {
-			setTimeout(function () {
-				save.html(save_text);
-				save.removeAttr("disabled");
-				doc.focus();
-			}, 1000);
-		});
+				setTimeout(function () {
+					save.html(save_text);
+					save.removeAttr("disabled");
+					doc.focus();
+				}, 1000);
+			});
 	}
 
 	function view() {
@@ -168,13 +148,73 @@ $(function() {
 		}
 	}
 
+	function header(content) {
+		if (doc.somethingSelected()) {
+			var selected = doc.getSelection();
+			doc.replaceSelection(content + selected);
+			var cursor = doc.getCursor('end');
+			doc.setCursor(cursor.line, cursor.ch);
+			doc.focus();
+		} else {
+			var cursor = doc.getCursor('end');
+			doc.setLine(cursor.line, content);
+			doc.setCursor(cursor.line, cursor.ch + content.length);
+			doc.focus();
+		}
+	}
+
+	function code() {
+		if (doc.somethingSelected()) {
+			var selected = doc.getSelection();
+			if (selected.indexOf("\n") !== -1) {
+				doc.replaceSelection("~~~\n" + selected + "\n~~~");
+			} else {
+				doc.replaceSelection("`" + selected + "`");
+			}
+			doc.focus();
+		} else {
+			var cursor = doc.getCursor('start');
+			var line_content = doc.getLine(cursor.line);
+			doc.setLine(cursor.line, line_content + "~~~\n\n~~~");
+			doc.setCursor(cursor.line + 1, 0);
+			doc.focus();
+		}
+	}
+
+	function link() {
+		if (doc.somethingSelected()) {
+			var selected = doc.getSelection();
+			doc.replaceSelection("[" + selected + "]()");
+			var cursor = doc.getCursor('end');
+			doc.setCursor(cursor.line, cursor.ch - 1);
+			doc.focus();
+		} else {
+			var cursor = doc.getCursor('start');
+			var line_content = doc.getLine(cursor.line);
+			doc.setLine(cursor.line, line_content + "[]()");
+			doc.setCursor(cursor.line, cursor.ch + 3);
+			doc.focus();
+		}
+	}
+
+	function picture() {
+		$.get('/list_pictures', function(json) {
+			$("#picture-list").html("");
+			if (json.error) {
+				$("#modal-error").html(json.error).show();
+			} else {
+				$("#picture-list").append(json.items);
+			}
+		});
+	}
+
 	// theme options
 	$("a.theme").click(function () {
 		var theme = $(this).attr("data-theme");
 		var color = $(this).attr("data-color");
 		doc.setOption("theme", theme);
 		$("#cursor-highlight").html(".CodeMirror-activeline-background {background: "
-			+ color +  " !important;}");
+			+ color + " !important;}");
 		if (supports_html5_storage()) {
 			localStorage.setItem("mkdoc.editor.theme", theme);
 			localStorage.setItem("mkdoc.editor.color", color);
@@ -208,6 +248,67 @@ $(function() {
 
 	Mousetrap.bindGlobal('ctrl+i', function (e) {
 		italic();
+	});
+
+	Mousetrap.bindGlobal('ctrl+1', function (e) {
+		if (e.preventDefault) {
+			e.preventDefault();
+		} else {
+			// internet explorer
+			e.returnValue = false;
+		}
+		header("# ");
+	});
+
+	Mousetrap.bindGlobal('ctrl+2', function (e) {
+		if (e.preventDefault) {
+			e.preventDefault();
+		} else {
+			// internet explorer
+			e.returnValue = false;
+		}
+		header("## ");
+	});
+
+	Mousetrap.bindGlobal('ctrl+3', function (e) {
+		if (e.preventDefault) {
+			e.preventDefault();
+		} else {
+			// internet explorer
+			e.returnValue = false;
+		}
+		header("### ");
+	});
+
+	Mousetrap.bindGlobal('ctrl+shift+c', function (e) {
+		if (e.preventDefault) {
+			e.preventDefault();
+		} else {
+			// internet explorer
+			e.returnValue = false;
+		}
+		code();
+	});
+
+	Mousetrap.bindGlobal('ctrl+shift+l', function (e) {
+		if (e.preventDefault) {
+			e.preventDefault();
+		} else {
+			// internet explorer
+			e.returnValue = false;
+		}
+		link();
+	});
+
+	Mousetrap.bindGlobal('ctrl+shift+p', function (e) {
+		if (e.preventDefault) {
+			e.preventDefault();
+		} else {
+			// internet explorer
+			e.returnValue = false;
+		}
+		$('#modal-picture').modal('show');
+		picture();
 	});
 
 	// local storage
