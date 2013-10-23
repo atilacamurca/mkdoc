@@ -26,7 +26,7 @@ A web editor develop under node.js as server and html5 as client.
 Installation:
 
     $ sudo su
-    # apt-get install nodejs
+    # apt-get install nodejs npm
 
  For development:
 
