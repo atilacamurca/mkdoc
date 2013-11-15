@@ -15,8 +15,9 @@ exports.view = function(curdir) {
 	});
 };
 
-exports.save = function(curdir, file, raw_data) {
-	var filepath = curdir + '/' + file;
+exports.save = function(curdir, raw_data) {
+	var json = querystring.parse(raw_data.toString());
+	var filepath = curdir + '/' + json.file;
 	var filepathbkp = filepath + "~";
 
 	var exists = fs.existsSync(filepath);
@@ -31,9 +32,6 @@ exports.save = function(curdir, file, raw_data) {
 		fs.unlinkSync(filepathbkp);
 	}
 	fs.linkSync(filepath, filepathbkp);
-
-	// FIXME: only works for one parameter
-	var json = querystring.parse(raw_data.toString());
 	fs.writeFileSync(filepath, json.content);
 
 	return JSON.stringify({
@@ -41,8 +39,9 @@ exports.save = function(curdir, file, raw_data) {
 	});
 };
 
-exports.load = function(curdir, file) {
-	var content = fs.readFileSync(curdir + '/' + file, {encoding: 'utf-8'});
+exports.load = function(curdir, raw_data) {
+	var json = querystring.parse(raw_data.toString());
+	var content = fs.readFileSync(curdir + '/' + json.file, {encoding: 'utf-8'});
 	return JSON.stringify({
 		content: content
 	});
@@ -56,7 +55,7 @@ exports.listPictures = function(curdir) {
 		var list = [];
 		for (var i = 0; i < imgdir.length; i++) {
 			if (/(\.png|\.jpg|\.jpeg)$/.test(imgdir[i])) {
-				list.push("<li><a href='#' class='picture'>" + imgdir[i] + "</a></li>");
+				list.push('<li><a href="#" class="picture">' + imgdir[i] + '</a></li>');
 			}
 		}
 		return JSON.stringify({
@@ -66,6 +65,27 @@ exports.listPictures = function(curdir) {
 		fs.mkdirSync(imgdir, '0666');
 		return JSON.stringify({
 			error: 'No images found at ' + imgdir
+		});
+	}
+}
+
+exports.listFiles = function(curdir) {
+	var exists = fs.existsSync(curdir);
+	if (exists) {
+		var files = fs.readdirSync(curdir);
+		var list = [];
+		for (var i = 0; i < files.length; i++) {
+			if (/(\.md)$/.test(files[i])
+					|| "main.tex" === files[i]) {
+				list.push('<li><a class="file" href="#" data-filename="' + files[i] + '">' + files[i] + '</a></li>');
+			}
+		}
+		return JSON.stringify({
+			files: list
+		});
+	} else {
+		return JSON.stringify({
+			error: 'Markdown files not found at ' + curdir
 		});
 	}
 }

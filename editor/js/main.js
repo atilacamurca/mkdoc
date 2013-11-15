@@ -1,4 +1,5 @@
 $(function () {
+	var openfile = "content.md";
 	var doc = CodeMirror.fromTextArea(document.getElementById("editor"), {
 		mode: "markdown",
 		styleActiveLine: true,
@@ -10,6 +11,7 @@ $(function () {
 
 	// load content to the editor
 	load();
+	loadFileList();
 	$('a[rel=tooltip],i[rel=tooltip],span[rel=tooltip],button[rel=tooltip]').tooltip({
 		placement: "bottom"
 	});
@@ -68,6 +70,12 @@ $(function () {
 		$('#modal-picture').modal('hide');
 		doc.focus();
 	});
+	
+	$(document).delegate('a.file', 'click', function() {
+		save();
+		openfile = $(this).attr('data-filename');
+		load();
+	});
 
 	$(".bt-header").click(function () {
 		var depth = $(this).attr("data-depth") + " ";
@@ -83,9 +91,14 @@ $(function () {
 	});
 
 	function load() {
-		$.post('/load', function (json) {
+		$.post('/load', {file: openfile}, function (json) {
 			var content = json.content;
 			doc.setValue(content);
+			if (/(\.tex$)/.test(openfile)) {
+				doc.setOption("mode", "stex");
+			} else if (/(\.md$)/.test(openfile)) {
+				doc.setOption("mode", "markdown");
+			}
 		});
 	}
 
@@ -95,17 +108,17 @@ $(function () {
 		var save_text = save.html();
 		save.attr("disabled", "disabled");
 		save.html(loadindText());
-		$.post('/save', {content: content},function (json) {
+		$.post('/save', {content: content, file: openfile},function (json) {
 			if (json.error) {
 				console.log(json.error);
 			}
 		}).complete(function () {
-				setTimeout(function () {
-					save.html(save_text);
-					save.removeAttr("disabled");
-					doc.focus();
-				}, 1000);
-			});
+			setTimeout(function () {
+				save.html(save_text);
+				save.removeAttr("disabled");
+				doc.focus();
+			}, 100);
+		});
 	}
 
 	function view() {
@@ -113,7 +126,7 @@ $(function () {
 		var view_text = view.html();
 		view.attr("disabled", "disabled");
 		view.html(loadindText());
-		$.post("/view",function (json) {
+		$.post("/view", function (json) {
 			console.log(json.error);
 		}).complete(function () {
 			setTimeout(function () {
@@ -121,6 +134,18 @@ $(function () {
 				view.removeAttr("disabled");
 				doc.focus();
 			}, 2000);
+		});
+	}
+	
+	function loadFileList() {
+		$.post("/list-files", function(json) {
+			$("#file-list").empty();
+			$("#file-list").append('<li class="nav-header">Files</li>');
+			for (index in json.files) {
+				$("#file-list").append(json.files[index]);
+			}
+		}).complete(function() {
+			
 		});
 	}
 

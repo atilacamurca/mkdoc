@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# deprecated, use mkdoc.js instead :)
 #
 #       mkdoc.py
 #       

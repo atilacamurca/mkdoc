@@ -8,7 +8,7 @@
       <meta name="author" content="">
 
       <!-- Le styles -->
-      <link href="css/bootstrap.css" rel="stylesheet">
+      <link rel="stylesheet" href="css/bootstrap.min.css">
       <style type="text/css">
          body {
             padding-top: 60px;
@@ -27,20 +27,13 @@
             }
          }
       </style>
-      <link href="css/bootstrap-responsive.css" rel="stylesheet">
+      <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
       <link href="css/mkdoc.css" rel="stylesheet">
 
       <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
       <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
       <![endif]-->
-
-      <!-- Fav and touch icons -->
-      <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-      <link rel="shortcut icon" href="../assets/ico/favicon.png">
    </head>
 
    <body>
@@ -53,10 +46,9 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                </button>
-               <a class="brand" href="#">mkdoc - docs</a>
+               <span class="brand">mkdoc - docs</span>
                <div class="nav-collapse collapse">
                   <ul class="nav">
-                     <li class="active"><a href="#">Home</a></li>
                      <li><a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown</a></li>
                      <li><a href="http://johnmacfarlane.net/pandoc/" target="_blank">Pandoc</a></li>
                      <li><a href="https://github.com/atilacamurca/mkdoc" target="_blank">Source code on GitHub</a></li>
@@ -74,8 +66,9 @@
                      <li class="nav-header">mkdoc</li>
                      <li><a href="#init">Novo projeto</a></li>
                      <li><a href="#edit">Editar documento</a></li>
-                     <li><a href="#edit-t">Editar template</a></li>
+                     <li><a href="#template">Editar template</a></li>
                      <li><a href="#view">Visualizar documento</a></li>
+                     <li><a href="#editor">Editor Web</a></li>
                      <li class="nav-header">Cabeçalhos</li>
                      <li><a href="#secao">Seção</a></li>
                      <li><a href="#sub-secao">Sub-seção</a></li>
@@ -108,11 +101,14 @@
                      <pre>$ mkdir nome-projeto
 $ cd nome-projeto
 $ mkdoc init</pre>
+							<p>Também é possível criar projetos latex.</p>
+							<pre>$ mkdoc init latex</pre>
                   </div><!--/span-->
                   <div class="span6">
                      <h3>Saída</h3>
-                     <pre>initializing project...
-done.</pre>
+                     <p>Por padrão é criado um projeto para apresentações usando beamer.</p>
+                     <pre>[ INFO] initializing project... 
+[ INFO] done.</pre>
                   </div><!--/span-->
 
                </div><!--/row-->
@@ -125,31 +121,34 @@ done.</pre>
                      <h3>Editar documento</h3>
                      <p>Para editar seu documento abra um terminal, entre no
                         diretório do seu projeto e faça.</p>
-                     <pre>$ mkdir edit</pre>
+                     <pre>$ mkdoc edit</pre>
+                     <p>Você ainda pode criar outros arquivos markdown (.md)
+                        e editá-los passando o nome do arquivo como parâmetro.</p>
+                     <pre>$ mkdoc edit file.md</pre>
                   </div><!--/span-->
                   <div class="span6">
                      <h3>Saída</h3>
-                     <pre>editing project ...
-open with [gedit]:</pre>
-                     <kbd>Enter</kbd> para abrir com gedit, ou digite seu editor de texto.
+                     <pre>[ INFO] editing 'content.md' ...
+mkdoc: open with [blank for default]:</pre>
+                     <kbd>Enter</kbd> para abrir com seu editor de texto padrão.
                   </div><!--/span-->
 
                </div><!--/row-->
                
                <hr/>
                
-               <div class="row-fluid" id="edit-t">
+               <div class="row-fluid" id="template">
 
                   <div class="span6">
                      <h3>Editar template</h3>
                      <p>Para editar seu documento abra um terminal, entre no
                         diretório do seu projeto e faça.</p>
-                     <pre>$ mkdir edit -t</pre>
+                     <pre>$ mkdoc template</pre>
                   </div><!--/span-->
                   <div class="span6">
                      <h3>Saída</h3>
-                     <pre>editing project ...
-open with [gedit]:</pre>
+                     <pre>[ INFO] editing 'main.tex' ...
+mkdoc: open with [blank for default]:</pre>
                      <kbd>Enter</kbd> para abrir com gedit, ou digite seu editor de texto.
                   </div><!--/span-->
 
@@ -163,11 +162,27 @@ open with [gedit]:</pre>
                      <h3>Visualizar documento</h3>
                      <p>Para visualizar seu documento abra um terminal, entre no
                         diretório do seu projeto e faça.</p>
-                     <pre>$ mkdir view</pre>
+                     <pre>$ mkdoc view</pre>
                   </div><!--/span-->
                   <div class="span6">
                      <h3>Saída</h3>
                      <p>Seu documento será compilado e seu documento pdf será aberto no evince.</p>
+                  </div><!--/span-->
+
+               </div><!--/row-->
+               
+               <hr/>
+               
+               <div class="row-fluid" id="editor">
+
+                  <div class="span6">
+                     <h3>Editor Web</h3>
+                     <p>Desfrute de um editor usando tecnologia HTML5 e JS.</p>
+                     <pre>$ mkdoc editor</pre>
+                  </div><!--/span-->
+                  <div class="span6">
+                     <h3>Saída</h3>
+                     <p>Seu documento será aberto no browser padrão.</p>
                   </div><!--/span-->
 
                </div><!--/row-->
@@ -518,8 +533,8 @@ printf("hello world.");
       <!-- Le javascript
       ================================================== -->
       <!-- Placed at the end of the document so the pages load faster -->
-      <script src="js/jquery.js"></script>
-      <script src="js/bootstrap.js"></script>
+      <script src="lib/jquery.js"></script>
+		<script src="lib/bootstrap.min.js"></script>
 
    </body>
 </html>

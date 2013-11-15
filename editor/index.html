@@ -13,6 +13,7 @@
     <link href="css/font-awesome.min.css" media="screen" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="theme/lesser-dark.css">
     <script src="mode/markdown/markdown.js"></script>
+    <script src="mode/stex/stex.js"></script>
     <script src="addon/selection/active-line.js"></script>
     <script src="lib/mousetrap.min.js"></script>
     <script src="lib/mousetrap-global-bind.min.js"></script>
@@ -119,12 +120,21 @@
     <div class="row" style="margin-top: 10px;">
         <div class="span3">
             <div class="well" style="max-width: 340px; padding: 8px 0;">
-                <ul class="nav nav-list">
-                    <li class="nav-header">Files (In development)</li>
-                    <li><a href="#">content.md</a></li>
-                    <li><a href="#">main.tex</a></li>
+                <ul class="nav nav-list" id="file-list">
                 </ul>
             </div>
+            <div class="well" style="max-width: 340px; padding: 8px 0;">
+					<ul class="nav nav-list">
+						<li class="nav-header">Resources</li>
+						<li>
+							<a href="http://daringfireball.net/projects/markdown/syntax"
+							target="_blank">Markdown Syntax</a>
+						</li>
+						<li>
+							<a href="docs.html" target="_blank">Mkdoc Documentation</a>
+						</li>
+               </ul>
+				</div>
         </div>
         <div class="span9">
             <form class="form">

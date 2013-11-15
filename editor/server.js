@@ -18,17 +18,23 @@ http.createServer(function(req, res) {
    } else if (pathname === '/save') {
 		req.on('data', function(raw_data) {
 			res.writeHead(200, {"Content-Type": "text/json"});
-			var result = editor.save(cwd, 'content.md', raw_data);
+			var result = editor.save(cwd, raw_data);
 			res.write(result);
 			res.end();
 		});
 	} else if (pathname === '/load') {
-		res.writeHead(200, {"Content-Type": "text/json"});
-		var result = editor.load(cwd, 'content.md');
-		res.end(result);
+		req.on('data', function(raw_data) {
+			res.writeHead(200, {"Content-Type": "text/json"});
+			var result = editor.load(cwd, raw_data);
+			res.end(result);
+		});
 	} else if (pathname === '/list_pictures') {
 		res.writeHead(200, {"Content-Type": "text/json"});
 		var result = editor.listPictures(cwd);
+		res.end(result);
+	} else if (pathname === '/list-files') {
+		res.writeHead(200, {"Content-Type": "text/json"});
+		var result = editor.listFiles(cwd);
 		res.end(result);
    } else {
       // http://ericsowell.com/blog/2011/5/6/serving-static-files-from-node-js

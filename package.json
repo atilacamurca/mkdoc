@@ -1,0 +1,26 @@
+{
+  "name": "mkdoc",
+  "version": "1.0.0",
+  "main": "mkdoc.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/atilacamurca/mkdoc"
+  },
+  "author": "Átila Camurça <camurca.home@gmail.com>",
+  "license": "GPLv3",
+  "description": "Helper to use pandoc for generating pdf presentations and documents.",
+  "dependencies": {
+    "commander": "~2.0.0",
+    "prompt": "~0.2.11",
+    "execSync": "~1.0.1-pre"
+  },
+  "devDependencies": {},
+  "keywords": [
+    "pandoc",
+    "latex",
+    "beamer",
+    "node.js",
+    "editor"
+  ]
+}

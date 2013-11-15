@@ -15,8 +15,8 @@ Maybe you will need other packages for especific LaTeX code.
 Then download, extract the project, rename to `mkdoc` and:
 
     $ sudo su
-	# mv mkdoc /usr/local
-	# ln -s /usr/local/mkdoc/mkdoc /usr/local/bin
+	 # mv mkdoc /usr/local
+	 # ln -s /usr/local/mkdoc/mkdoc /usr/local/bin
 
 mkdoc editor
 ------------
@@ -28,7 +28,9 @@ Installation:
     $ sudo su
     # apt-get install nodejs npm
 
- For development:
+requires version v0.10.20 or higher.
+
+For development:
 
     # npm install -g nodemon
 
@@ -45,7 +47,7 @@ Options
 
         editor - open a web editor (needs nodejs)
 
-        edit - open file to edit
+        edit [file] - open file to edit
             options:
             -t, --template - open template file to edit instead
 
