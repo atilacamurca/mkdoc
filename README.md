@@ -38,7 +38,7 @@ Options
 -------
 
     USAGE
-        mkdoc command [options]
+        mkdoc [options] [command]
 
     COMMANDS
         init - start a project in an empty directory
@@ -48,13 +48,15 @@ Options
         editor - open a web editor (needs nodejs)
 
         edit [file] - open file to edit
-            options:
-            -t, --template - open template file to edit instead
+        
+        template - open template file to edit instead
 
         view - generate file and open pdf
 
-        help - show this help
-
-        docs - show the documentation of mkdoc in the default browser
+        docs - show the documentation of mkdoc in the browser
 
         cleanup - remove log and aux files
+
+    OPTIONS
+        -h, --help - show this help
+        -V, --version  show version

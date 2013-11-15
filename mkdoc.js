@@ -172,14 +172,11 @@ program.command("view")
 		.description("compile files and open pdf")
 		.action(mkdoc.view);
 program.command("docs")
-		.description("show the documentation of mkdoc in the default browser")
+		.description("show the documentation of mkdoc in the browser")
 		.action(mkdoc.docs);
 program.command("cleanup")
 		.description("remove log and aux files")
 		.action(mkdoc.cleanup);
-program.command("test")
-		.description("test")
-		.action(mkdoc.test);
 
 program.parse(process.argv);
 
