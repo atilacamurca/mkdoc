@@ -32,7 +32,12 @@ var mkdoc = function() {
 				var src_template = util.format("%s/%s.tex", __dirname, type);
 				var template = util.format("%s/main.tex", process.cwd());
 				var content = util.format("%s/content.md", process.cwd());
-				fs.linkSync(src_template, template);
+				fs.readFile(src_template, function(err, data) {
+					if (err) throw err;
+					fs.writeFile(template, data, function() {
+						if (err) throw err;
+					});
+				});
 				// create content.md file
 				fs.writeFile(content, "your text here", function(err) {
 					if (err) throw err;
