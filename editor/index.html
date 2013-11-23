@@ -3,21 +3,11 @@
 <head>
     <title>mkdoc editor</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script src="lib/jquery.js"></script>
-    <script src="lib/bootstrap.min.js"></script>
-    <script src="lib/bootstrap-tooltip.js"></script>
-    <script src="lib/codemirror.js"></script>
     <link rel="stylesheet" href="css/codemirror.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
-    <link href="css/font-awesome.min.css" media="screen" rel="stylesheet" type="text/css"/>
+    <link href="css/font-awesome.min.css" media="screen" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="theme/lesser-dark.css">
-    <script src="mode/markdown/markdown.js"></script>
-    <script src="mode/stex/stex.js"></script>
-    <script src="addon/selection/active-line.js"></script>
-    <script src="lib/mousetrap.min.js"></script>
-    <script src="lib/mousetrap-global-bind.min.js"></script>
-    <script src="js/main.js"></script>
 
     <style type="text/css">
         body {
@@ -25,7 +15,7 @@
         }
 
         .CodeMirror {
-            border: 1px solid black;
+            border: 1px solid #ddd;
             font-size: 14px;
             height: 500px;
         }
@@ -174,11 +164,24 @@
 
      </ul>
      <div id="modal-error" class="alert alert-danger hide"></div>
+     <div id="modal-warning" class="alert alert-warning hide"></div>
   </div>
   <div class="modal-footer">
     <a href="#" class="btn" data-dismiss="modal">Close</a>
   </div>
 </div>
 
+	<script src="lib/jquery.js"></script>
+   <script src="lib/bootstrap.min.js"></script>
+   <script src="lib/bootstrap-tooltip.js"></script>
+   <script src="lib/codemirror.js"></script>
+   <script src="mode/markdown/markdown.js"></script>
+   <script src="mode/stex/stex.js"></script>
+   <script src="addon/selection/active-line.js"></script>
+   <script src="lib/mousetrap.min.js"></script>
+   <script src="lib/mousetrap-global-bind.min.js"></script>
+   <script src="js/editor.js"></script>
+   <script src="js/main.js"></script>
+   <script src="js/shortcuts.js"></script>
 </body>
 </html>

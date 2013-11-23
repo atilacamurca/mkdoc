@@ -157,7 +157,7 @@ var mkdoc = function() {
 		docs: docs,
 		cleanup: cleanup,
 		template: template,
-	}
+	};
 }();
 
 program.version("1.0.0");

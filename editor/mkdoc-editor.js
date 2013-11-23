@@ -55,7 +55,7 @@ exports.listPictures = function(curdir) {
 		var list = [];
 		for (var i = 0; i < imgdir.length; i++) {
 			if (/(\.png|\.jpg|\.jpeg)$/.test(imgdir[i])) {
-				list.push('<li><a href="#" class="picture">' + imgdir[i] + '</a></li>');
+				list.push('<li><a href="#" onclick="return false;" class="picture">' + imgdir[i] + '</a></li>');
 			}
 		}
 		return JSON.stringify({
@@ -77,7 +77,7 @@ exports.listFiles = function(curdir) {
 		for (var i = 0; i < files.length; i++) {
 			if (/(\.md)$/.test(files[i])
 					|| "main.tex" === files[i]) {
-				list.push('<li><a class="file" href="#" data-filename="' + files[i] + '">' + files[i] + '</a></li>');
+				list.push('<li><a class="file" onclick="return false;" href="#" data-filename="' + files[i] + '">' + files[i] + '</a></li>');
 			}
 		}
 		return JSON.stringify({
