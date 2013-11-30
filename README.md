@@ -38,7 +38,7 @@ requires version v0.10.20 or higher.
 
 #### Complete Version with nodejs
 
-<https://www.dropbox.com/s/v8ltpol0cc3rwis/mkdoc-all.deb>
+<https://www.dropbox.com/sh/5e5fm2j38vh87u4/A2FBbq065v/mkdoc-all.deb>
 
 Options
 -------
