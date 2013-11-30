@@ -75,9 +75,9 @@ exports.listFiles = function(curdir) {
 		var files = fs.readdirSync(curdir);
 		var list = [];
 		for (var i = 0; i < files.length; i++) {
-			if (/(\.md)$/.test(files[i])
+			if (/(\.md|\.bib)$/.test(files[i])
 					|| "main.tex" === files[i]) {
-				list.push('<li><a class="file" onclick="return false;" href="#" data-filename="' + files[i] + '">' + files[i] + '</a></li>');
+				list.push(files[i]);
 			}
 		}
 		return JSON.stringify({

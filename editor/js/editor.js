@@ -20,11 +20,12 @@ var editor = function() {
 		$.post('/load', {file: openfile}, function (json) {
 			var content = json.content;
 			doc.setValue(content);
-			if (/(\.tex$)/.test(openfile)) {
+			if (/(\.tex|\.bib)$/.test(openfile)) {
 				doc.setOption("mode", "stex");
-			} else if (/(\.md$)/.test(openfile)) {
+			} else if (/(\.md)$/.test(openfile)) {
 				doc.setOption("mode", "markdown");
 			}
+			struct.parse(doc);
 			// if the document changes and an undo is called
 			// the history from the previous document is used
 			// causing data loss...
@@ -45,6 +46,7 @@ var editor = function() {
 			setTimeout(function () {
 				save.html(DEF_TEXT.save);
 				save.removeAttr("disabled");
+				struct.parse(doc);
 				doc.focus();
 			}, 500);
 		});
@@ -67,13 +69,23 @@ var editor = function() {
 	
 	function loadFileList() {
 		$.post("/list-files", function(json) {
-			$("#file-list").empty();
-			$("#file-list").append('<li class="nav-header">Files</li>');
+			var ul = $("#file-list");
+			ul.empty();
+			ul.append('<li class="nav-header">Files</li>');
 			for (index in json.files) {
-				$("#file-list").append(json.files[index]);
+				var a = $("<a/>", {
+					html: json.files[index],
+					class: "file",
+					onclick: "return false;",
+					href: "#",
+					"data-filename": json.files[index]
+				});
+				var li = $("<li/>", {html: a});
+				if (json.files[index] === openfile) {
+					li.attr("class", "active");
+				}
+				ul.append(li);
 			}
-		}).complete(function() {
-			
 		});
 	}
 	

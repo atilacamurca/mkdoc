@@ -104,6 +104,7 @@ var mkdoc = function() {
 			var config = JSON.parse(data);
 			exec("ls *.md", {cwd: process.cwd()}, function(err, stdout, stderr) {
 				if (err) throw err;
+				compileBibtex();
 				var files = stdout.trim().split("\n");
 				for (index in files) {
 					var basename = path.basename(files[index], '.md');
@@ -113,6 +114,14 @@ var mkdoc = function() {
 				sh.run("xdg-open main.pdf");
 			});
 		});
+	}
+	
+	function compileBibtex() {
+		var cmd = util.format("ls %s/*.bib", process.cwd());
+		var code = sh.run(cmd); // exists any bibtex file?
+		if (code == 0) {
+			sh.run("bibtex main");
+		}
 	}
 	
 	function docs() {

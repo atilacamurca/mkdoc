@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>mkdoc editor</title>
+    <title>mkdoc-editor</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="css/codemirror.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -113,6 +113,12 @@
                 <ul class="nav nav-list" id="file-list">
                 </ul>
             </div>
+            
+            <div class="well" style="max-width: 340px; padding: 8px 0;">
+					<ul class="nav nav-list" id="struct">
+               </ul>
+            </div>
+            
             <div class="well" style="max-width: 340px; padding: 8px 0;">
 					<ul class="nav nav-list">
 						<li class="nav-header">Resources</li>
@@ -178,10 +184,12 @@
    <script src="mode/markdown/markdown.js"></script>
    <script src="mode/stex/stex.js"></script>
    <script src="addon/selection/active-line.js"></script>
+   <script src="addon/edit/closebrackets.js"></script>
    <script src="lib/mousetrap.min.js"></script>
    <script src="lib/mousetrap-global-bind.min.js"></script>
    <script src="js/editor.js"></script>
    <script src="js/main.js"></script>
    <script src="js/shortcuts.js"></script>
+   <script src="js/structure.js"></script>
 </body>
 </html>

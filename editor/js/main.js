@@ -6,7 +6,8 @@ $(function () {
 		lineNumbers: true,
 		lineWrapping: true,
 		theme: 'lesser-dark',
-		autofocus: true
+		autofocus: true,
+		autoCloseBrackets: true
 	});
 
 	editor.init(doc);
@@ -64,6 +65,16 @@ $(function () {
 		editor.save();
 		file = $(this).attr('data-filename');
 		editor.load(file);
+		
+		$("#file-list li").removeClass("active");
+		var li = $(this).parent();
+		li.attr("class", "active");
+	});
+	
+	$(document).delegate('a.struct', 'click', function() {
+		var line = $(this).attr("data-linenumber");
+		doc.setCursor({line: line, ch: 0});
+		doc.focus();
 	});
 
 	$(".bt-header").click(function () {
