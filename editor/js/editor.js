@@ -1,19 +1,10 @@
 var editor = function() {
 	
 	var openfile = "content.md",
-		doc,
 		DEF_TEXT = {
 			save: '<i class="icon-save"></i> Save',
 			view: '<i class="icon-eye-open"></i> View',
 		};
-	
-	/**
-	 * @param doc_ref document reference
-	 * hack: CodeMirror could not be initialized inside this object!
-	 */
-	function init(doc_ref) {
-		doc = doc_ref;
-	}
 	
 	function load(file) {
 		openfile = file || openfile;
@@ -25,7 +16,7 @@ var editor = function() {
 			} else if (/(\.md)$/.test(openfile)) {
 				doc.setOption("mode", "markdown");
 			}
-			struct.parse(doc);
+			struct.parse();
 			// if the document changes and an undo is called
 			// the history from the previous document is used
 			// causing data loss...
@@ -230,8 +221,6 @@ var editor = function() {
 	
 	/* public functions and variables */
 	return {
-		//openfile: openfile,
-		init: init,
 		load: load,
 		save: save,
 		view: view,

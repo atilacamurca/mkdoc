@@ -6,26 +6,11 @@
     <link rel="stylesheet" href="css/codemirror.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="css/zTreeStyle/zTreeStyle.css">
     <link href="css/font-awesome.min.css" media="screen" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="theme/lesser-dark.css">
+    <link rel="stylesheet" href="css/editor.css">
 
-    <style type="text/css">
-        body {
-            background-color: #eeeeee;
-        }
-
-        .CodeMirror {
-            border: 1px solid #ddd;
-            font-size: 14px;
-            height: 500px;
-        }
-
-        .editor-name {
-            font-size: 20px;
-            margin-right: 16px;
-            font-weight: bold;
-        }
-    </style>
     <style id="cursor-highlight" type="text/css">
         .CodeMirror-activeline-background {
             background: #555753 !important;
@@ -36,9 +21,9 @@
 <div class="container">
     <div class="row" style="margin-top: 20px;">
         <div class="span12">
-					<span class="editor-name">
-                        <i class="icon-file"></i> mkdoc-editor
-                    </span>
+				<span class="editor-name">
+               <i class="icon-file"></i> mkdoc-editor
+            </span>
 
             <div class="btn-group">
                 <button id="save" href="#" onclick="return false;"
@@ -101,11 +86,34 @@
                     <i class="icon-share-alt"></i> Redo
                 </a>
             </div>
-            <hr/>
+            
+            <div class="btn-group">
+                <a href="#" class="btn theme"
+                   data-theme="default" data-color="#e8f2ff"
+                   onclick="return false;"
+                   rel="tooltip" title="Lighs On">
+                    <i class="icon-lightbulb"></i>
+                </a>
+                <a href="#" class="btn btn-inverse theme"
+                   data-theme="lesser-dark" data-color="#555753"
+                   onclick="return false;"
+                   rel="tooltip" title="Lighs Off">
+                    <i class="icon-lightbulb"></i>
+                </a>
+            </div>
         </div>
         <!-- .span -->
     </div>
     <!-- .row -->
+    
+    <hr/>
+    
+    <div class="row">
+		<div class="span12">
+			<span style="margin-right: 10px;">LaTeX</span>
+			<div class="btn-group" id="latex-math"></div>
+		</div>
+    </div>
 
     <div class="row" style="margin-top: 10px;">
         <div class="span3">
@@ -115,8 +123,8 @@
             </div>
             
             <div class="well" style="max-width: 340px; padding: 8px 0;">
-					<ul class="nav nav-list" id="struct">
-               </ul>
+					<!--<h6>Structure</h6>-->
+					<ul class="nav nav-list" id="struct"></ul>
             </div>
             
             <div class="well" style="max-width: 340px; padding: 8px 0;">
@@ -139,24 +147,35 @@
         </div>
     </div>
     <!-- .row -->
-
-    <div class="row">
-        <div class="span2 offset3">
-            <div>Theme:</div>
-            <div class="btn-group">
-                <a href="#" class="btn btn-large theme"
-                   data-theme="default" data-color="#e8f2ff"
-                   onclick="return false;">
-                    <i class="icon-lightbulb"></i>
-                </a>
-                <a href="#" class="btn btn-inverse btn-large theme"
-                   data-theme="lesser-dark" data-color="#555753"
-                   onclick="return false;">
-                    <i class="icon-lightbulb icon-"></i>
-                </a>
-            </div>
-        </div>
-    </div>
+    
+    <!--<div class="row">
+		<div class="offset3 span9">
+			<div id="editor-log" class="clearfix">
+				<div id="editor-log-header">Log</div>
+				<div id="editor-log-content">
+					text<br/>
+					text<br/>
+					text<br/>
+					text<br/>
+					text<br/>
+					text<br/>
+					text<br/>
+					text<br/>
+					text<br/>
+					text<br/>
+					text<br/>
+				</div>
+			</div>
+		</div>
+   </div>-->
+    
+   <footer>
+		<p class="pull-right"><a href="#">Back to top</a></p>
+		<p>
+			mkdoc por <a href="https://github.com/atilacamurca">github.com/atilacamurca</a>
+			&middot; <a href="https://twitter.com/atilacamurca">@atilacamurca</a>
+		</p>
+	</footer>
 </div>
 <!-- .container -->
 
@@ -187,6 +206,8 @@
    <script src="addon/edit/closebrackets.js"></script>
    <script src="lib/mousetrap.min.js"></script>
    <script src="lib/mousetrap-global-bind.min.js"></script>
+   <script src="lib/jquery.ztree.all-3.5.min.js"></script>
+   
    <script src="js/editor.js"></script>
    <script src="js/main.js"></script>
    <script src="js/shortcuts.js"></script>

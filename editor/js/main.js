@@ -1,4 +1,7 @@
+
 $(function () {
+
+	loadViews();
 
 	var doc = CodeMirror.fromTextArea(document.getElementById("editor"), {
 		mode: "markdown",
@@ -9,12 +12,17 @@ $(function () {
 		autofocus: true,
 		autoCloseBrackets: true
 	});
-
-	editor.init(doc);
+	
+	window.doc = doc;
 	// load content to the editor
 	editor.load();
 	editor.loadFileList();
 	editor.loadPreferences();
+	
+	/*var zNodes = [
+		{ id:1, pId:0, name:"Root", open:true},
+	];
+	$.fn.zTree.init($("#struct"), struct.setting, zNodes);*/
 	
 	$('a[rel=tooltip],i[rel=tooltip],span[rel=tooltip],button[rel=tooltip]').tooltip({
 		placement: "bottom"
@@ -96,4 +104,9 @@ $(function () {
 		var color = $(this).attr("data-color");
 		editor.setTheme(theme, color);
 	});
+	
+	// load view files
+	function loadViews() {
+		$( "#latex-math" ).load( "views/latex-math.html" );
+	}
 });

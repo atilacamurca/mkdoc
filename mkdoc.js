@@ -132,10 +132,13 @@ var mkdoc = function() {
 	
 	function cleanup() {
 		console.log("[ INFO] cleaning up ...");
-		var ls = "ls *.aux *.log *.nav *.out *.snm *.toc";
+        // list all auxiliary files
+		var ls = "ls | grep -E '\.(aux|log|nav|out|snm|toc)$'";
 		exec(ls, {cwd: process.cwd()}, function(err, stdout, stderr) {
 			if (err) throw err;
 			console.log(stdout);
+            var args = stdout.trim().split("\n");
+            
 			prompt.get({
 				properties: {
 					opt: {
@@ -146,7 +149,8 @@ var mkdoc = function() {
 				// default option: no
 				var opt = result.opt || "n";
 				if (opt === "y") {
-					var rm = util.format("cd %s && rm *.aux *.log *.nav *.out *.snm *.toc", process.cwd());
+                    // TODO: check to see if any of the args have spaces in filename!
+					var rm = util.format("cd %s && rm %s", process.cwd(), args.join(' '));
 					sh.run(rm);
 				}
 			});

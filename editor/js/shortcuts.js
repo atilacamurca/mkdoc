@@ -59,4 +59,19 @@ $(function() {
 		$('#modal-picture').modal('show');
 		editor.picture();
 	});
+	
+	Mousetrap.bindGlobal('shift+alt+f', function(e) {
+		prevent(e);
+		latex_math.env_inline();
+	});
+
+	Mousetrap.bindGlobal('ctrl+alt+m', function(e) {
+		prevent(e);
+		latex_math.env_array();
+	});
+	
+	Mousetrap.bindGlobal('ctrl+alt+f', function(e) {
+		prevent(e);
+		latex_math.fraction();
+	});
 });
