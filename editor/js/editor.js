@@ -1,30 +1,22 @@
 var editor = function() {
 	
 	var openfile = "content.md",
-		doc,
 		DEF_TEXT = {
 			save: '<i class="icon-save"></i> Save',
 			view: '<i class="icon-eye-open"></i> View',
 		};
-	
-	/**
-	 * @param doc_ref document reference
-	 * hack: CodeMirror could not be initialized inside this object!
-	 */
-	function init(doc_ref) {
-		doc = doc_ref;
-	}
 	
 	function load(file) {
 		openfile = file || openfile;
 		$.post('/load', {file: openfile}, function (json) {
 			var content = json.content;
 			doc.setValue(content);
-			if (/(\.tex$)/.test(openfile)) {
+			if (/(\.tex|\.bib)$/.test(openfile)) {
 				doc.setOption("mode", "stex");
-			} else if (/(\.md$)/.test(openfile)) {
+			} else if (/(\.md)$/.test(openfile)) {
 				doc.setOption("mode", "markdown");
 			}
+			struct.parse();
 			// if the document changes and an undo is called
 			// the history from the previous document is used
 			// causing data loss...
@@ -33,11 +25,12 @@ var editor = function() {
 	}
 	
 	function save() {
+		console.log("saving", openfile);
 		var content = doc.getValue();
 		var save = $("#save");
 		save.attr("disabled", "disabled");
 		save.html(loadindText());
-		$.post('/save', {content: content, file: openfile},function (json) {
+		var jqxhr = $.post('/save', {content: content, file: openfile},function (json) {
 			if (json.error) {
 				console.log(json.error);
 			}
@@ -45,9 +38,12 @@ var editor = function() {
 			setTimeout(function () {
 				save.html(DEF_TEXT.save);
 				save.removeAttr("disabled");
+				struct.parse(doc);
 				doc.focus();
 			}, 500);
 		});
+		// return promise
+		return jqxhr;
 	}
 	
 	function view() {
@@ -67,13 +63,23 @@ var editor = function() {
 	
 	function loadFileList() {
 		$.post("/list-files", function(json) {
-			$("#file-list").empty();
-			$("#file-list").append('<li class="nav-header">Files</li>');
+			var ul = $("#file-list");
+			ul.empty();
+			ul.append('<li class="nav-header">Files</li>');
 			for (index in json.files) {
-				$("#file-list").append(json.files[index]);
+				var a = $("<a/>", {
+					html: json.files[index],
+					class: "file",
+					onclick: "return false;",
+					href: "#",
+					"data-filename": json.files[index]
+				});
+				var li = $("<li/>", {html: a});
+				if (json.files[index] === openfile) {
+					li.attr("class", "active");
+				}
+				ul.append(li);
 			}
-		}).complete(function() {
-			
 		});
 	}
 	
@@ -218,8 +224,6 @@ var editor = function() {
 	
 	/* public functions and variables */
 	return {
-		//openfile: openfile,
-		init: init,
 		load: load,
 		save: save,
 		view: view,

@@ -1,7 +1,7 @@
 
 var exec = require('child_process').exec,
 	fs = require('fs'),
-	querystring = require('querystring');
+	querystring = require('qs');
 
 exports.view = function(curdir) {
 	exec('mkdoc view', {cwd: curdir}, function(err, stdout, stderr) {
@@ -16,7 +16,7 @@ exports.view = function(curdir) {
 };
 
 exports.save = function(curdir, raw_data) {
-	var json = querystring.parse(raw_data.toString());
+	var json = querystring.parse(raw_data);
 	var filepath = curdir + '/' + json.file;
 	var filepathbkp = filepath + "~";
 
@@ -51,11 +51,21 @@ exports.listPictures = function(curdir) {
 	var imgdir = curdir + '/img';
 	var exists_imgdir = fs.existsSync(imgdir);
 	if (exists_imgdir) {
-		var imgdir = fs.readdirSync(imgdir);
+		var contents = fs.readdirSync(imgdir);
 		var list = [];
-		for (var i = 0; i < imgdir.length; i++) {
-			if (/(\.png|\.jpg|\.jpeg)$/.test(imgdir[i])) {
-				list.push('<li><a href="#" onclick="return false;" class="picture">' + imgdir[i] + '</a></li>');
+		for (var i = 0; i < contents.length; i++) {
+			if (/(\.png|\.jpg|\.jpeg)$/.test(contents[i])) {
+				list.push(toListItemImgLink(contents[i]));
+			}
+
+			stats = fs.lstatSync(imgdir + "/" + contents[i]);
+			if (stats.isDirectory()) {
+				var subcontents = fs.readdirSync(imgdir + "/" + contents[i]);
+				for (var j = 0; j < subcontents.length; j++) {
+					if (/(\.png|\.jpg|\.jpeg)$/.test(subcontents[j])) {
+						list.push(toListItemImgLink(contents[i] + "/" + subcontents[j]));
+					}
+				}
 			}
 		}
 		return JSON.stringify({
@@ -69,17 +79,32 @@ exports.listPictures = function(curdir) {
 	}
 }
 
+function toListItemImgLink(filename) {
+	return '<li><a href="#" onclick="return false;" class="picture">' + filename + '</a></li>';
+}
+
 exports.listFiles = function(curdir) {
 	var exists = fs.existsSync(curdir);
 	if (exists) {
 		var files = fs.readdirSync(curdir);
 		var list = [];
 		for (var i = 0; i < files.length; i++) {
-			if (/(\.md)$/.test(files[i])
+			if (/(\.md|\.bib)$/.test(files[i])
 					|| "main.tex" === files[i]) {
-				list.push('<li><a class="file" onclick="return false;" href="#" data-filename="' + files[i] + '">' + files[i] + '</a></li>');
+				list.push(files[i]);
 			}
 		}
+
+		var existsChapterFolder = fs.existsSync(curdir + "/chapters");
+		if (existsChapterFolder) {
+			var chapterFiles = fs.readdirSync(curdir + "/chapters");
+			for (var i = 0; i < chapterFiles.length; i++) {
+				if (/(\.md)$/.test(chapterFiles[i])) {
+					list.push("chapters/" + chapterFiles[i])
+				}
+			}
+		}
+		
 		return JSON.stringify({
 			files: list
 		});

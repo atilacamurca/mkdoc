@@ -36,7 +36,7 @@ requires version v0.10.20 or higher.
 
     # npm install -g nodemon
 
-#### Complete Version with nodejs
+#### Complete Version with nodejs (32-bits)
 
 <https://www.dropbox.com/s/v8ltpol0cc3rwis/mkdoc-all.deb>
 

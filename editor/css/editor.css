@@ -1,0 +1,46 @@
+body {
+	background-color: #eeeeee;
+	padding-bottom: 40px;
+}
+
+.CodeMirror {
+	border: 1px solid #ddd;
+	font-size: 14px;
+	height: 450px;
+}
+
+.editor-name {
+	font-size: 20px;
+	margin-right: 16px;
+	font-weight: bold;
+}
+
+#editor-log {
+	border-top: 1px solid #ddd;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	margin: 10px 0;
+	position: relative;
+}
+
+#editor-log-header {
+	padding: 9px 15px;
+	background-color: #f2dede;
+	color: #b94a48;
+	font-weight: bold;
+}
+
+#editor-log-content {
+	background-color: #ffffff;
+	padding: 9px 15px;
+	max-height: 100px;
+	overflow-y: scroll;
+}
+
+#well-struct {
+	max-width: 340px;
+	max-height: 200px;
+	padding: 8px 0;
+	overflow: auto;
+}

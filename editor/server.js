@@ -4,6 +4,7 @@ var http = require('http'),
       editor = require('./mkdoc-editor.js'),
       fs = require('fs'),
       path = require('path'),
+      qs = require('qs'),
 		cwd = process.argv[2];
 
 http.createServer(function(req, res) {
@@ -16,9 +17,18 @@ http.createServer(function(req, res) {
       var result = editor.view(cwd);
 		res.end(result);
    } else if (pathname === '/save') {
+		var body = '';
 		req.on('data', function(raw_data) {
+			body += raw_data;
+			// Too much POST data, kill the connection!
+         if (body.length > 1e6) {
+				// TODO: really kill the connection :)
+				console.log("too much data ...");
+			}
+		});
+		req.on('end', function () {
 			res.writeHead(200, {"Content-Type": "text/json"});
-			var result = editor.save(cwd, raw_data);
+			var result = editor.save(cwd, body);
 			res.write(result);
 			res.end();
 		});
