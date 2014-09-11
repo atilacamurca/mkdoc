@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/atilacamurca/mkdoc",
   "dependencies": {
-    "express": "^4.4.2"
+    "express": "^4.4.2",
+    "qs": "^2.2.3"
   }
 }
