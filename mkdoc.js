@@ -9,7 +9,7 @@ var program 	= require('commander'),
 	 sh 		= require('execSync');
 
 var CONFIG_FILENAME = ".config.json",
-	 SUPPORTED_TYPES = ['beamer', 'latex'];
+	 SUPPORTED_TYPES = ['beamer', 'latex', 'io-slides'];
 
 prompt.message = "mkdoc";
 prompt.start();
@@ -25,38 +25,8 @@ var mkdoc = (function() {
 			return;
 		}
 
-		fs.readdir(process.cwd(), function(err, files) {
-			if (err) { throw err; }
-
-			if(files.length === 0) {
-				var src_template = util.format("%s/%s.tex", __dirname, type);
-				var template = util.format("%s/main.tex", process.cwd());
-				var content = util.format("%s/content.md", process.cwd());
-				fs.readFile(src_template, function(err, data) {
-					if (err) { throw err; }
-					fs.writeFile(template, data, function() {
-						if (err) { throw err; }
-					});
-				});
-				// create content.md file
-				fs.writeFile(content, "your text here", function(err) {
-					if (err) { throw err; }
-				});
-
-				// config file
-				var config = {
-					"type": type,
-					"chapters": false
-				};
-				var config_filename = util.format("%s/%s", process.cwd(), CONFIG_FILENAME);
-				fs.writeFile(config_filename, JSON.stringify(config), function(err) {
-					if (err) { throw err; }
-					console.log("[ INFO] done.");
-				});
-			} else {
-				console.log("[ERROR] directory is not empty.");
-			}
-		});
+		var callback = _presentationType(type);
+		callback.init();
 	}
 
 	function editor() {
@@ -127,19 +97,6 @@ var mkdoc = (function() {
 		});
 	}
 
-	/**
-	 * Get a ls command that's safe from dir not found error
-	 */
-	function _safeListMarkdowFiles() {
-		var cmd = "ls *.md";
-		var result = sh.exec("ls chapters | grep -E '\\.(md)$' | wc -l");
-		var count = parseInt(result.stdout);
-		if (count > 0) {
-			cmd += " chapters/*.md";
-		}
-		return cmd;
-	}
-
 	function compileBibtex() {
 		var cmd = util.format("ls %s/*.bib", process.cwd());
 		var code = sh.run(cmd); // exists any bibtex file?
@@ -184,6 +141,37 @@ var mkdoc = (function() {
 	function template() {
 		edit("main.tex");
 	}
+
+	/* private functions */
+
+	/**
+	* Get a ls command that's safe from dir not found error
+	*/
+	function _safeListMarkdowFiles() {
+		var cmd = "ls *.md";
+		var result = sh.exec("ls chapters | grep -E '\\.(md)$' | wc -l");
+		var count = parseInt(result.stdout);
+		if (count > 0) {
+			cmd += " chapters/*.md";
+		}
+		return cmd;
+	}
+
+	/**
+	 * call require based on type, if type is undefined read the .config.json file.
+	 * @param {[String]} type [presentation file (optional)]
+	 */
+	function _presentationType(type) {
+		if (!type) {
+			var config_filename = util.format("%s/%s", process.cwd(), CONFIG_FILENAME);
+			var data = fs.readFileSync(config_filename);
+			var config = JSON.parse(data);
+			type = config.type;
+		}
+		return require("./" + type + ".js");
+	}
+
+	/* end of private functions */
 
 	/* public functions */
 	return {
