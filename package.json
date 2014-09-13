@@ -12,8 +12,9 @@
   "description": "Helper to use pandoc for generating pdf presentations and documents.",
   "dependencies": {
     "commander": "~2.0.0",
-    "prompt": "~0.2.11",
-    "execSync": "~1.0.1-pre"
+    "execSync": "~1.0.1-pre",
+    "ncp": "^0.6.0",
+    "prompt": "~0.2.11"
   },
   "devDependencies": {},
   "keywords": [

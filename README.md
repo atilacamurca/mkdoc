@@ -10,15 +10,15 @@ Instalation
 
 Install pandoc and latex-beamer first.
 
-    $ sudo apt-get install pandoc latex-beamer
+    $ sudo apt-get install pandoc latex-beamer python python-jinja2 python-markdown
 
-Maybe you will need other packages for especific LaTeX code.
+Maybe you will need other packages for especific LaTeX code, like `texlive-extra`.
 
 Then download, extract the project, rename to `mkdoc` and:
 
     $ sudo su
-	 # mv mkdoc /usr/local
-	 # ln -s /usr/local/mkdoc/mkdoc /usr/local/bin
+	# mv mkdoc /usr/local
+	# ln -s /usr/local/mkdoc/mkdoc /usr/local/bin
 
 mkdoc editor
 ------------
@@ -54,7 +54,7 @@ Options
         editor - open a web editor (needs nodejs)
 
         edit [file] - open file to edit
-        
+
         template - open template file to edit instead
 
         view - generate file and open pdf

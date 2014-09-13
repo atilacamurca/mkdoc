@@ -8,6 +8,7 @@ var program 	= require('commander'),
 	 prompt		= require("prompt"),
 	 sh 		= require('execSync');
 
+// TODO: make a file with all constants
 var CONFIG_FILENAME = ".config.json",
 	 SUPPORTED_TYPES = ['beamer', 'latex', 'io-slides'];
 
@@ -22,6 +23,7 @@ var mkdoc = (function() {
 
 		if (SUPPORTED_TYPES.indexOf(type) === -1) {
 			console.log("[ERROR] Type %s not supported.", type);
+			console.log("[ INFO] Type can be: %s", SUPPORTED_TYPES.join(', '));
 			return;
 		}
 
@@ -71,38 +73,8 @@ var mkdoc = (function() {
 
 	function view() {
 		console.log("[ INFO] compiling project ...");
-		var config_filename = util.format("%s/%s", process.cwd(), CONFIG_FILENAME);
-		fs.readFile(config_filename, function (err, data) {
-			if (err) { throw err; }
-			var config = JSON.parse(data);
-			if (! config.chapters) {
-				config.chapters = false;
-			}
-			var cmd = _safeListMarkdowFiles();
-			exec(cmd, {cwd: process.cwd()}, function(err, stdout, stderr) {
-				if (err) { throw err; }
-				compileBibtex();
-				var files = stdout.trim().split("\n");
-				for (var index in files) {
-					console.log("file:", files[index]);
-					var basename = files[index].substr(0, files[index].length - 3); // path.basename(files[index], '.md');
-					console.log("basename:", basename);
-					sh.run(util.format(
-						"pandoc %s -t %s %s.md -o %s.tex",
-						(config.chapters ? "--chapters":""), config.type, basename, basename));
-				}
-				sh.run("pdflatex -shell-escape -interaction=nonstopmode main.tex");
-				sh.run("xdg-open main.pdf");
-			});
-		});
-	}
-
-	function compileBibtex() {
-		var cmd = util.format("ls %s/*.bib", process.cwd());
-		var code = sh.run(cmd); // exists any bibtex file?
-		if (code === 0) {
-			sh.run("bibtex main");
-		}
+		var callback = _presentationType();
+		callback.view();
 	}
 
 	function docs() {
@@ -113,29 +85,8 @@ var mkdoc = (function() {
 
 	function cleanup() {
 		console.log("[ INFO] cleaning up ...");
-        // list all auxiliary files
-		var ls = "ls | grep -E '\\.(aux|log|nav|out|snm|toc)$'";
-		exec(ls, {cwd: process.cwd()}, function(err, stdout, stderr) {
-			if (err) { throw err; }
-			console.log(stdout);
-            var args = stdout.trim().split("\n");
-
-			prompt.get({
-				properties: {
-					opt: {
-						message: "are you sure? y/[n]"
-					}
-				}
-			}, function(err, result) {
-				// default option: no
-				var opt = result.opt || "n";
-				if (opt === "y") {
-                    // TODO: check to see if any of the args have spaces in filename!
-					var rm = util.format("cd %s && rm %s", process.cwd(), args.join(' '));
-					sh.run(rm);
-				}
-			});
-		});
+        var callback = _presentationType();
+		callback.cleanup();
 	}
 
 	function template() {
@@ -143,19 +94,6 @@ var mkdoc = (function() {
 	}
 
 	/* private functions */
-
-	/**
-	* Get a ls command that's safe from dir not found error
-	*/
-	function _safeListMarkdowFiles() {
-		var cmd = "ls *.md";
-		var result = sh.exec("ls chapters | grep -E '\\.(md)$' | wc -l");
-		var count = parseInt(result.stdout);
-		if (count > 0) {
-			cmd += " chapters/*.md";
-		}
-		return cmd;
-	}
 
 	/**
 	 * call require based on type, if type is undefined read the .config.json file.
