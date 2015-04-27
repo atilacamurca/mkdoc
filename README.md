@@ -10,33 +10,31 @@ Instalation
 
 Install pandoc and latex-beamer first.
 
-    $ sudo apt-get install pandoc latex-beamer python python-jinja2 python-markdown
+    sudo apt-get install pandoc latex-beamer python python-jinja2 python-markdown
 
 Maybe you will need other packages for especific LaTeX code, like `texlive-extra`.
 
+    sudo apt-get install texlive-extra
+
+Install node:
+
+    curl -sL https://deb.nodesource.com/setup | sudo bash -
+    sudo apt-get install nodejs
+    sudo apt-get install build-essential
+    sudo npm install -g nodemon
+
 Then download, extract the project, rename to `mkdoc` and:
 
-    $ sudo su
-	# mv mkdoc /usr/local
-	# ln -s /usr/local/mkdoc/mkdoc /usr/local/bin
+    sudo mv mkdoc /usr/local
+	sudo ln -s /usr/local/mkdoc/mkdoc /usr/local/bin
+    cd /usr/local/mkdoc
+    npm install
+    cd /usr/local/mkdoc/editor
+    npm install
 
-mkdoc editor
-------------
+<https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#debian-and-ubuntu-based-linux-distributions>
 
-A web editor develop under node.js as server and html5 as client.
-
-### Installation:
-
-    $ sudo su
-    # apt-get install nodejs npm
-
-requires version v0.10.20 or higher.
-
-#### For development:
-
-    # npm install -g nodemon
-
-#### Complete Version with nodejs (32-bits)
+#### Complete Version with nodejs (Ubuntu 12.04 32-bits)
 
 <https://www.dropbox.com/s/v8ltpol0cc3rwis/mkdoc-all.deb>
 
@@ -48,7 +46,7 @@ Options
 
     COMMANDS
         init - start a project in an empty directory
-            options: beamer|latex
+            options: beamer|latex|io-slides
             default: beamer
 
         editor - open a web editor (needs nodejs)
