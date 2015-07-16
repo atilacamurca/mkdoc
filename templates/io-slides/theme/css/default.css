@@ -21,9 +21,13 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
+strong {
+	font-weight: bold;
+}
+
 /* line 22, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html {
-  line-height: 1;
+  line-height: 1.5;
 }
 
 /* line 24, ../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
@@ -465,14 +469,14 @@ h1, h2, h3 {
 /* line 280, ../scss/default.scss */
 h2 {
   font-size: 45px;
-  line-height: 45px;
+  line-height: 65px;
   letter-spacing: -2px;
   color: #515151;
 }
 
 /* line 287, ../scss/default.scss */
 h3 {
-  font-size: 30px;
+  font-size: 35px;
   letter-spacing: -1px;
   line-height: 2;
   font-weight: inherit;
@@ -804,6 +808,22 @@ slide.fill {
   background-size: cover;
 }
 
+slide.fill h2, slide.fill h3 {
+  color: #FFF;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  -webkit-background-clip: padding-box; /* for Safari */
+  background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 10px;
+}
+
 /* Size variants */
 /* line 535, ../scss/default.scss */
 article.smaller p, article.smaller ul {
@@ -1090,7 +1110,7 @@ article.smaller q:before, article.smaller q:after {
 /* line 725, ../scss/default.scss */
 .source {
   font-size: 14px;
-  color: darkgrey;
+  color: #666;
   position: absolute;
   bottom: 70px;
   left: 60px;
@@ -1210,10 +1230,10 @@ article.smaller q:before, article.smaller q:after {
 
 /* ===== SLIDE CONTENT ===== */
 /* line 803, ../scss/default.scss */
-.logoslide img {
+/*.logoslide img {
   width: 383px;
   height: 92px;
-}
+}*/
 
 /* line 809, ../scss/default.scss */
 .segue {
@@ -1228,6 +1248,7 @@ article.smaller q:before, article.smaller q:after {
 .segue h3 {
   color: #e6e6e6;
   line-height: 2.8;
+  font-weight: bold;
 }
 /* line 820, ../scss/default.scss */
 .segue hgroup {
@@ -1403,6 +1424,25 @@ aside.gdbar img {
 /* line 971, ../scss/default.scss */
 .overview .slide-area {
   display: none;
+}
+
+p.big {
+  font-size: 35pt;
+  font-weight: bold;
+}
+
+.text-center {
+  text-align: center;
+}
+
+img.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.img-circle {
+  border-radius: 50%;
 }
 
 @media print {

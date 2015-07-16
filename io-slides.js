@@ -2,7 +2,6 @@
 var   fs                = require('fs')
     , util              = require('util')
     , ncp               = require('ncp').ncp
-    , sh                = require('execSync')
     , exec              = require('child_process').exec
     //, prompt            = require("prompt")
     /* CONSTANTS */
@@ -51,11 +50,11 @@ var IoSlides = (function() {
 
     function view() {
         var cmd = util.format("python %s/render-io-slides.py", __dirname);
-        exec(cmd, {cwd: process.cwd()}, function (err, stdout, stderr) {
+        exec(cmd, {cwd: process.cwd()}, function (err, stdout /* , stderr */) {
             if (err) { throw err; }
 
             console.log(stdout);
-            sh.run("firefox presentation-output.html");
+            // sh("firefox presentation-output.html");
             console.log("[ INFO] done.");
         });
     }
@@ -72,4 +71,4 @@ var IoSlides = (function() {
     };
 })();
 
-exports = module.exports = IoSlides;
+module.exports = IoSlides;

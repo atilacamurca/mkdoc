@@ -2,4 +2,4 @@
 
 var Latex = require('./latex.js').Latex;
 
-exports = module.exports = Latex('beamer');
+module.exports = new Latex('beamer');

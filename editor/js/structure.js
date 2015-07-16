@@ -1,5 +1,6 @@
+
 var struct = function () {
-	
+
 	var setting = {
 		view: {
 			dblClickExpand: dblClickExpand
@@ -10,11 +11,11 @@ var struct = function () {
 			}
 		}
 	};
-	
+
 	function dblClickExpand(treeId, treeNode) {
 		return treeNode.level > 0;
 	}
-	
+
 	function parse() {
 		/*var tree = $.fn.zTree.getZTreeObj("struct");
 		var zNodes = [];
@@ -23,7 +24,7 @@ var struct = function () {
 		tree.removeChildNodes(nodes[0]);
 		//            R  #  ##  ###...
 		var levels = [1, 1, 1,  1,  1, 1, 1];
-		
+
 		doc.eachLine(function (line) {
 			var text = line.text;
 			if (/^#{1,6}/.test(text)) {
@@ -44,7 +45,7 @@ var struct = function () {
 			}
 		});
 		tree.addNodes(nodes[0], zNodes);*/
-		
+
 		var ul = $("#struct");
 		ul.empty();
 		ul.append('<li class="nav-header">Structure</li>');
@@ -62,7 +63,7 @@ var struct = function () {
 			}
 		});
 	}
-	
+
 	return {
 		setting: setting,
 		parse: parse

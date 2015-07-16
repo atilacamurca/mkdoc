@@ -1,7 +1,7 @@
 
 var   fs                = require('fs')
     , util              = require('util')
-    , sh                = require('execSync')
+    , sh                = require('sync-exec')
     , exec              = require('child_process').exec
     , prompt            = require("prompt")
     /* CONSTANTS */
@@ -61,7 +61,7 @@ var Latex = function (type) {
                 config.chapters = false;
             }
             var cmd = _safeListMarkdowFiles();
-            exec(cmd, {cwd: process.cwd()}, function(err, stdout, stderr) {
+            exec(cmd, {cwd: process.cwd()}, function(err, stdout /* , stderr */) {
                 if (err) { throw err; }
 
                 _compileBibtex();
@@ -69,12 +69,12 @@ var Latex = function (type) {
                 var files = stdout.trim().split("\n");
                 for (var index in files) {
                     var basename = files[index].substr(0, files[index].length - 3); // path.basename(files[index], '.md');
-                    sh.run(util.format(
+                    sh(util.format(
                         "pandoc %s -t %s %s.md -o %s.tex",
                         (config.chapters ? "--chapters" : ""), config.type, basename, basename));
                 }
-                sh.run("pdflatex -shell-escape -interaction=nonstopmode main.tex");
-                sh.run("xdg-open main.pdf");
+                sh("pdflatex -shell-escape -interaction=nonstopmode main.tex");
+                sh("xdg-open main.pdf");
                 console.log("[ INFO] done.");
             });
         });
@@ -83,7 +83,7 @@ var Latex = function (type) {
     function cleanup() {
         // list all auxiliary files
         var ls = "ls | grep -E '\\.(aux|log|nav|out|snm|toc)$'";
-        exec(ls, {cwd: process.cwd()}, function(err, stdout, stderr) {
+        exec(ls, {cwd: process.cwd()}, function(err, stdout /* , stderr */) {
             if (err) { throw err; }
 
             // show files to be deleted
@@ -102,7 +102,7 @@ var Latex = function (type) {
                 if (opt === "y") {
                     // TODO: check to see if any of the args have spaces in filename!
                     var rm = util.format("cd %s && rm %s", process.cwd(), args.join(' '));
-                    sh.run(rm);
+                    sh(rm);
                 }
             });
         });
@@ -115,9 +115,9 @@ var Latex = function (type) {
      */
     function _compileBibtex() {
         var cmd = util.format("ls %s/*.bib", process.cwd());
-        var code = sh.run(cmd); // exists any bibtex file?
+        var code = sh(cmd); // exists any bibtex file?
         if (code === 0) {
-            sh.run("bibtex main");
+            sh("bibtex main");
         }
     }
 
@@ -126,7 +126,7 @@ var Latex = function (type) {
     */
     function _safeListMarkdowFiles() {
         var cmd = "ls *.md";
-        var result = sh.exec("ls chapters | grep -E '\\.(md)$' | wc -l");
+        var result = sh("ls chapters | grep -E '\\.(md)$' | wc -l");
         var count = parseInt(result.stdout);
         if (count > 0) {
             cmd += " chapters/*.md";
@@ -144,6 +144,6 @@ var Latex = function (type) {
     };
 };
 
-exports = module.exports = Latex('latex');
+module.exports = new Latex('latex');
 
 exports.Latex = module.exports.Latex = Latex;

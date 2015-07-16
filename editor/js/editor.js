@@ -1,11 +1,11 @@
 var editor = function() {
-	
+
 	var openfile = "content.md",
 		DEF_TEXT = {
 			save: '<i class="icon-save"></i> Save',
 			view: '<i class="icon-eye-open"></i> View',
 		};
-	
+
 	function load(file) {
 		openfile = file || openfile;
 		$.post('/load', {file: openfile}, function (json) {
@@ -23,21 +23,21 @@ var editor = function() {
 			doc.clearHistory();
 		});
 	}
-	
+
 	function save() {
 		console.log("saving", openfile);
 		var content = doc.getValue();
-		var save = $("#save");
-		save.attr("disabled", "disabled");
-		save.html(loadindText());
+		var btn = $("#save");
+		btn.attr("disabled", "disabled");
+		btn.html(loadindText());
 		var jqxhr = $.post('/save', {content: content, file: openfile},function (json) {
 			if (json.error) {
 				console.log(json.error);
 			}
 		}).complete(function () {
 			setTimeout(function () {
-				save.html(DEF_TEXT.save);
-				save.removeAttr("disabled");
+				btn.html(DEF_TEXT.save);
+				btn.removeAttr("disabled");
 				struct.parse(doc);
 				doc.focus();
 			}, 500);
@@ -45,28 +45,29 @@ var editor = function() {
 		// return promise
 		return jqxhr;
 	}
-	
+
 	function view() {
-		var view = $("#view");
-		view.attr("disabled", "disabled");
-		view.html(loadindText());
+		var btn = $("#view");
+		btn.attr("disabled", "disabled");
+		btn.html(loadindText());
 		$.post("/view", function (json) {
 			console.log(json.error);
 		}).complete(function () {
 			setTimeout(function () {
-				view.html(DEF_TEXT.view);
-				view.removeAttr("disabled");
+				btn.html(DEF_TEXT.view);
+				btn.removeAttr("disabled");
 				doc.focus();
 			}, 2000);
 		});
 	}
-	
+
 	function loadFileList() {
 		$.post("/list-files", function(json) {
 			var ul = $("#file-list");
 			ul.empty();
 			ul.append('<li class="nav-header">Files</li>');
-			for (index in json.files) {
+			var len = json.files.length;
+			for (var index = 0; index < len; index++) {
 				var a = $("<a/>", {
 					html: json.files[index],
 					class: "file",
@@ -82,7 +83,7 @@ var editor = function() {
 			}
 		});
 	}
-	
+
 	function loadPreferences() {
 		if (_supports_html5_storage()) {
 			var theme = localStorage.getItem("mkdoc.editor.theme");
@@ -92,46 +93,48 @@ var editor = function() {
 
 			var color = localStorage.getItem("mkdoc.editor.color");
 			if (color !== null) {
-				$("#cursor-highlight").html(".CodeMirror-activeline-background {background: "
-					+ color + " !important;}");
+				$("#cursor-highlight").html(".CodeMirror-activeline-background {background: " +
+					color + " !important;}");
 			}
 		}
 	}
-	
+
 	function loadindText() {
 		return '<i class="icon-spinner icon-spin"></i> Loading...';
 	}
-	
+
 	function bold() {
+		var cursor;
 		if (doc.somethingSelected()) {
 			var selected = doc.getSelection();
 			doc.replaceSelection("**" + selected + "**");
-			var cursor = doc.getCursor('end');
+			cursor = doc.getCursor('end');
 			doc.setCursor(cursor.line, cursor.ch);
 			doc.focus();
 		} else {
-			var cursor = doc.getCursor();
+			cursor = doc.getCursor();
 			var line = doc.getLine(cursor.line);
-			var bold = "****";
-			var content = [line.slice(0, cursor.ch), bold, line.slice(cursor.ch)].join('');
+			var bold_md = "****";
+			var content = [line.slice(0, cursor.ch), bold_md, line.slice(cursor.ch)].join('');
 			doc.setLine(cursor.line, content);
 			doc.setCursor(cursor.line, cursor.ch + 2);
 			doc.focus();
 		}
 	}
-	
+
 	function italic() {
+		var cursor;
 		if (doc.somethingSelected()) {
 			var selected = doc.getSelection();
 			doc.replaceSelection("_" + selected + "_");
-			var cursor = doc.getCursor('end');
+			cursor = doc.getCursor('end');
 			doc.setCursor(cursor.line, cursor.ch);
 			doc.focus();
 		} else {
-			var cursor = doc.getCursor();
+			cursor = doc.getCursor();
 			var line = doc.getLine(cursor.line);
-			var italic = "__";
-			var content = [line.slice(0, cursor.ch), italic, line.slice(cursor.ch)].join('');
+			var italic_md = "__";
+			var content = [line.slice(0, cursor.ch), italic_md, line.slice(cursor.ch)].join('');
 			doc.setLine(cursor.line, content);
 			doc.setCursor(cursor.line, cursor.ch + 1);
 			doc.focus();
@@ -139,14 +142,15 @@ var editor = function() {
 	}
 
 	function header(content) {
+		var cursor;
 		if (doc.somethingSelected()) {
 			var selected = doc.getSelection();
 			doc.replaceSelection(content + selected);
-			var cursor = doc.getCursor('end');
+			cursor = doc.getCursor('end');
 			doc.setCursor(cursor.line, cursor.ch);
 			doc.focus();
 		} else {
-			var cursor = doc.getCursor('end');
+			cursor = doc.getCursor('end');
 			doc.setLine(cursor.line, content);
 			doc.setCursor(cursor.line, cursor.ch + content.length);
 			doc.focus();
@@ -172,14 +176,15 @@ var editor = function() {
 	}
 
 	function link() {
+		var cursor;
 		if (doc.somethingSelected()) {
 			var selected = doc.getSelection();
 			doc.replaceSelection("[" + selected + "]()");
-			var cursor = doc.getCursor('end');
+			cursor = doc.getCursor('end');
 			doc.setCursor(cursor.line, cursor.ch - 1);
 			doc.focus();
 		} else {
-			var cursor = doc.getCursor('start');
+			cursor = doc.getCursor('start');
 			var line_content = doc.getLine(cursor.line);
 			doc.setLine(cursor.line, line_content + "[description]()");
 			doc.setCursor(cursor.line, cursor.ch + 3);
@@ -201,27 +206,27 @@ var editor = function() {
 			}
 		});
 	}
-	
+
 	function setTheme(theme, line_color) {
 		doc.setOption("theme", theme);
-		$("#cursor-highlight").html(".CodeMirror-activeline-background {background: "
-			+ line_color + " !important;}");
+		$("#cursor-highlight").html(".CodeMirror-activeline-background {background: " +
+			line_color + " !important;}");
 		if (_supports_html5_storage()) {
 			localStorage.setItem("mkdoc.editor.theme", theme);
 			localStorage.setItem("mkdoc.editor.color", line_color);
 		}
 	}
-	
+
 	/* private functions */
-	
+
 	function _supports_html5_storage() {
 		try {
-			return 'localStorage' in window && window['localStorage'] !== null;
+			return 'localStorage' in window && window.localStorage !== null;
 		} catch (e) {
 			return false;
 		}
 	}
-	
+
 	/* public functions and variables */
 	return {
 		load: load,

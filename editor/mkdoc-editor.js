@@ -4,7 +4,7 @@ var exec = require('child_process').exec,
 	querystring = require('qs');
 
 exports.view = function(curdir) {
-	exec('mkdoc view', {cwd: curdir}, function(err, stdout, stderr) {
+	exec('mkdoc view', {cwd: curdir}, function(err, stdout /* , stderr */ ) {
 		if (err) {
 			console.log(err);
 		}
@@ -58,7 +58,7 @@ exports.listPictures = function(curdir) {
 				list.push(toListItemImgLink(contents[i]));
 			}
 
-			stats = fs.lstatSync(imgdir + "/" + contents[i]);
+			var stats = fs.lstatSync(imgdir + "/" + contents[i]);
 			if (stats.isDirectory()) {
 				var subcontents = fs.readdirSync(imgdir + "/" + contents[i]);
 				for (var j = 0; j < subcontents.length; j++) {
@@ -77,7 +77,7 @@ exports.listPictures = function(curdir) {
 			error: 'No images found at ' + imgdir
 		});
 	}
-}
+};
 
 function toListItemImgLink(filename) {
 	return '<li><a href="#" onclick="return false;" class="picture">' + filename + '</a></li>';
@@ -89,8 +89,8 @@ exports.listFiles = function(curdir) {
 		var files = fs.readdirSync(curdir);
 		var list = [];
 		for (var i = 0; i < files.length; i++) {
-			if (/(\.md|\.bib)$/.test(files[i])
-					|| "main.tex" === files[i]) {
+			if (/(\.md|\.bib)$/.test(files[i]) ||
+					"main.tex" === files[i]) {
 				list.push(files[i]);
 			}
 		}
@@ -98,13 +98,13 @@ exports.listFiles = function(curdir) {
 		var existsChapterFolder = fs.existsSync(curdir + "/chapters");
 		if (existsChapterFolder) {
 			var chapterFiles = fs.readdirSync(curdir + "/chapters");
-			for (var i = 0; i < chapterFiles.length; i++) {
+			for (i = 0; i < chapterFiles.length; i++) {
 				if (/(\.md)$/.test(chapterFiles[i])) {
-					list.push("chapters/" + chapterFiles[i])
+					list.push("chapters/" + chapterFiles[i]);
 				}
 			}
 		}
-		
+
 		return JSON.stringify({
 			files: list
 		});
@@ -113,4 +113,4 @@ exports.listFiles = function(curdir) {
 			error: 'Markdown files not found at ' + curdir
 		});
 	}
-}
+};

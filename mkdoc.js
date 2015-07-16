@@ -1,16 +1,16 @@
 #!/usr/bin/env node
 
 var program 	= require('commander'),
-	 fs 		= require("fs"),
-	 util 		= require("util"),
-	 path		= require("path"),
-	 exec		= require('child_process').exec,
-	 prompt		= require("prompt"),
-	 sh 		= require('execSync');
+	fs	 		= require("fs"),
+	util 		= require("util"),
+	path		= require("path"),
+	exec		= require('child_process').exec,
+	prompt		= require("prompt"),
+	sh 			= require('sync-exec');
 
 // TODO: make a file with all constants
 var CONFIG_FILENAME = ".config.json",
-	 SUPPORTED_TYPES = ['beamer', 'latex', 'io-slides'];
+	SUPPORTED_TYPES = ['beamer', 'latex', 'io-slides'];
 
 prompt.message = "mkdoc";
 prompt.start();
@@ -35,8 +35,14 @@ var mkdoc = (function() {
 		console.log("[ INFO] opening mkdoc-editor ... ");
 		// FIXME: I change the order because the server block the xdg-open :(
 		// TODO: make a callback function to call xdg-open before server starts!
-		var cmd = util.format("xdg-open http://localhost:9669 && cd %s/editor && nodemon server.js %s", __dirname, process.cwd());
-		sh.run(cmd);
+		var cmd = util.format("cd %s/editor && nodemon server.js %s", __dirname, process.cwd());
+		var proc = exec(cmd, function (err) {
+			if (err) { throw err; }
+		});
+
+		proc.stdout.on('data', function (data) {
+        	console.log(data.trim());
+    	});
 	}
 
 	function edit(file) {
@@ -61,7 +67,7 @@ var mkdoc = (function() {
 					// TODO: look for another way to detach the process from the console
 					// gedit detach himself :)
 					var cmd = util.format("%s %s &", result.app, file);
-					exec(cmd, function(err, stdout, stderr) {
+					exec(cmd, function(err /* , stdout , stderr */) {
 						if (err) { throw err; }
 					});
 				});
@@ -80,7 +86,7 @@ var mkdoc = (function() {
 	function docs() {
 		console.log("[ INFO] opening docs ...");
 		var url = util.format("file://%s/editor/docs.html", __dirname);
-		sh.run(util.format("xdg-open %s", url));
+		sh(util.format("xdg-open %s", url));
 	}
 
 	function cleanup() {
