@@ -12,9 +12,9 @@ Install pandoc and latex-beamer first.
 
     sudo apt-get install pandoc latex-beamer python python-jinja2 python-markdown
 
-Maybe you will need other packages for especific LaTeX code, like `texlive-extra`.
+Maybe you will need other packages for especific LaTeX code, like `texlive-latex-extra`.
 
-    sudo apt-get install texlive-extra
+    sudo apt-get install texlive-latex-extra
 
 Install node:
 
